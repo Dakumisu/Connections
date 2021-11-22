@@ -1,4 +1,4 @@
-import * as THREE from 'three'
+import { Color, DoubleSide, LinearFilter, Mesh, PlaneBufferGeometry, RGBFormat, ShaderMaterial, SphereBufferGeometry, Vector2, VideoTexture } from 'three'
 
 import Scene from '@js/Scene'
 import { Store } from '@js/Store'
@@ -6,27 +6,63 @@ import { Store } from '@js/Store'
 import vertex from '@glsl/vertex.vert'
 import fragment from '@glsl/fragment.frag'
 
+import bouleNoire from '@static/video/laboulenoir.mp4'
+import boulenoirAlpha from '@static/video/laboulenoirAlpha.mp4'
+
 class Blueprint {
    constructor(opt) {
       this.scene = Scene.scene
+
+      this.blueprint = {}
+
+      this.initialized = false
 
       this.init()
       this.resize()
    }
 
    init() {
-      this.blueprintGeometry = new THREE.PlaneBufferGeometry(1,1)
-      this.blueprintMaterial = new THREE.ShaderMaterial({
+      this.videoTexture = this.getVideo(bouleNoire)
+      this.videoTextureAlpha = this.getVideo(boulenoirAlpha)
+
+      this.setGeometry()
+      this.setMaterial()
+      this.setMesh()
+
+      this.initialized = true
+      // this.getVideo(bouleNoire).then(( value ) => {
+      //    this.videoTexture = value;
+
+      //    this.getVideo(boulenoirAlpha).then(( value ) => {
+      //       this.videoTextureAlpha = value;
+
+      //       this.setGeometry()
+      //       this.setMaterial()
+      //       this.setMesh()
+      
+      //       this.initialized = true
+      //    })
+      // })
+   }
+
+   setGeometry() {
+      this.blueprint.geometry = new PlaneBufferGeometry(1, 1, 1, 1)
+   }
+
+   setMaterial() {
+      this.blueprint.material = new ShaderMaterial({
          vertexShader: vertex,
          fragmentShader: fragment,
          uniforms: {
             uTime: { value : 0 },
-            uColor: { value: new THREE.Color(0xffffff) },
+            uVideoTexture: { value: this.videoTexture },
+            uVideoTextureAlpha: { value: this.videoTextureAlpha },
+            uColor: { value: new Color(0xffffff) },
             uAlpha: { value: 1 },
-            uAspect : { value : new THREE.Vector2(Store.sizes.width, Store.sizes.height) },
+            uAspect : { value : new Vector2(Store.sizes.width, Store.sizes.height) },
             uPixelRatio: { value: window.devicePixelRatio }
          },
-         side: THREE.DoubleSide,
+         side: DoubleSide,
          transparent: true,
 
          /* pour les particules */
@@ -35,17 +71,49 @@ class Blueprint {
          // blending: THREE.AdditiveBlending
       })
 
-      this.blueprintMesh = new THREE.Mesh(this.blueprintGeometry, this.blueprintMaterial)
-      this.blueprintMesh.frustumCulled = false // https://threejs.org/docs/#api/en/core/Object3D.frustumCulled
+   }
 
-      this.scene.add(this.blueprintMesh)
+   setMesh() {
+      this.blueprint.mesh = new Mesh(this.blueprint.geometry, this.blueprint.material)
+      this.blueprint.mesh.frustumCulled = false // https://threejs.org/docs/#api/en/core/Object3D.frustumCulled
+
+      this.add(this.blueprint.mesh)
+   }
+
+   add(mesh) {
+      console.log(mesh);
+      this.scene.add(mesh)
+   }
+
+   getVideo(src) {
+      // const promise = new Promise((resolve, reject) => {
+         const video = document.createElement('video')
+         video.src = src
+         video.autoplay = true
+         video.loop = true
+         
+         const videoTexture = new VideoTexture(video);
+         videoTexture.minFilter = LinearFilter;
+         videoTexture.magFilter = LinearFilter;
+         videoTexture.format = RGBFormat;
+
+         // resolve(videoTexture);
+      // });
+
+      return videoTexture
+      // return promise
    }
 
    resize() {
       window.addEventListener('resize', () => {
-         this.blueprintMaterial.uniforms.uAspect.value = new THREE.Vector2(Store.sizes.width, Store.sizes.height)
-         this.blueprintMaterial.uniforms.uPixelRatio.value = window.devicePixelRatio
+         this.blueprint.material.uniforms.uAspect.value = new Vector2(Store.sizes.width, Store.sizes.height)
+         this.blueprint.material.uniforms.uPixelRatio.value = window.devicePixelRatio
      })
+   }
+
+   update() {
+      if (!this.initialized) return
+
    }
 }
 

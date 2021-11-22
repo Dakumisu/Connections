@@ -28,3 +28,34 @@ body {
 	touch-action: none;
 	user-select: none;
 }
+
+.ui {
+	.background {
+		width: 100vw;
+		height: 100vh;
+		position: absolute;
+		z-index: 0;
+		background-image: url('../static/img/bg.png');
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+
+	// img {
+	// 	width: 100vw;
+	// 	height: 100vh;
+	// 	position: absolute;
+	// 	top: 0;
+	// 	left: 0;
+	// }
+}
+
+.canvas--container {
+	.webgl {
+		position: absolute;
+		width: 100vw;
+		height: 100vh;
+		top: 0;
+		left: 0;
+		z-index: 1;
+	}
+}

@@ -8,11 +8,11 @@ precision highp float;
 uniform float uTime;
 
 varying vec2 vUv;
-varying vec3 vPos;
+// varying vec3 vPos;
 
 void main() {
    vUv = uv;
-   vPos = position;
+   // vPos = position;
    vec3 pos = position;
 
    vec4 mv = modelViewMatrix * vec4(pos, 1.);
