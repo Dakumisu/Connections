@@ -3,8 +3,8 @@ import { Color, DoubleSide, LinearFilter, Mesh, PlaneBufferGeometry, RGBFormat, 
 import Scene from '@js/Scene'
 import { Store } from '@js/Store'
 
-import vertex from '@glsl/vertex.vert'
-import fragment from '@glsl/fragment.frag'
+import vertex from '@glsl/darkHole/vertex.vert'
+import fragment from '@glsl/darkHole/fragment.frag'
 
 import bouleNoire from '@static/video/laboulenoir.mp4'
 import boulenoirAlpha from '@static/video/laboulenoirAlpha.mp4'

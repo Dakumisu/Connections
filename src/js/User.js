@@ -29,7 +29,7 @@ class User {
    }
 
    setGeometry() {
-      this.user.geometry = new BoxBufferGeometry(.1, .1, .1, 1, 1, 1)
+      this.user.geometry = new BoxBufferGeometry(.05, .05, .05, 1, 1, 1)
    }
 
    setMaterial() {

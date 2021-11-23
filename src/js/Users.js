@@ -34,7 +34,6 @@ class Users {
       }
       
       Store.users = this.users
-      console.log(Store.users);
 
       this.add(this.groups.dev)
       this.add(this.groups.designer)

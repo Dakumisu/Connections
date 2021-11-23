@@ -19,8 +19,6 @@ import Users from '@js/Users'
 import Connections from '@js/Connections'
 // import User from '@js/User'
 
-console.log(Datas.datas.length);
-
 // const darkHole = new DarkHole()
 // const themes = new Themes()
 const users = new Users()
@@ -35,7 +33,7 @@ Raf.suscribe('update', () => { update() })
 function update() {
     Scene.update()
     // darkHole.update()
-    // themes.update()
-    users.update(Raf.timeElapsed)
+    // users.update(Raf.timeElapsed)
+    Themes.update()
     Control.controls.update()
 }
