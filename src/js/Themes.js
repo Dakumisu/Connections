@@ -1,19 +1,20 @@
-import { Color, DoubleSide, LinearFilter, Mesh, PlaneBufferGeometry, RGBFormat, ShaderMaterial, Vector2, VideoTexture } from 'three'
-
 import Scene from '@js/Scene'
+import Raycaster from '@js/Raycaster'
+import Mouse from '@js/Mouse'
 import { Store } from '@js/Store'
+
 import loadGLTF from '@utils/loader/loadGLTF'
 
-import theme from '@model/testpoints.glb'
-
-console.log(theme);
+import theme from '@model/testpoints2.glb'
 
 class Themes {
    constructor(opt) {
       this.scene = Scene.scene
 
+      this.themes = {}
 
       this.initialized = false
+      this.parseInitialized = false
 
       this.init()
    }
@@ -24,35 +25,65 @@ class Themes {
 
    loadModel() {
       loadGLTF(theme).then( value => {
-         this.themes = value.scenes[0];
-         console.log(this.themes);
+         this.themesModel = value.scenes[0];
 
-         this.add(this.themes)
-         this.initialized = true
+         this.setThemeName()
+         this.parseTheme()
+         this.add(this.themesModel)
       })
    }
 
+   setThemeName() {
+      for (let i = 0; i < this.themesModel.children.length; i++) {
+         this.themesModel.children[i].name = Store.list[i]
+      }
+      
+      console.log(this.themesModel);
+   }
+   
+   parseTheme() {
+      for (let i = 0; i < this.themesModel.children.length; i++) {
+         this.themes[this.themesModel.children[i].name] = this.themesModel.children[i]
+      }
+      this.parseInitialized = true
+
+      console.log(this.themes);
+   }
+
+   getPosition(name) {         
+      return this.themes[name].position
+   }
+   
    setGeometry() {
-
+      
    }
-
+   
    setMaterial() {
-
+      
    }
-
+   
    setMesh() {
       
    }
-
+   
    add(mesh) {
-      console.log(mesh);
       this.scene.add(mesh)
+
+      this.initialized = true
    }
 
    update() {
       if (!this.initialized) return
 
+      Raycaster.raycaster.setFromCamera(Mouse.mouseScene, Scene.camera)
+
+      const intersects = Raycaster.raycaster.intersectObjects(this.themesModel.children)
+
+      for (let i = 0; i < intersects.length; i ++) {
+         console.log('hover ' + intersects[ i ].object.id)
+      }
    }
 }
 
-export default Themes
+const out = new Themes()
+export default out

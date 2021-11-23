@@ -15,10 +15,15 @@ class Raycaster {
       }
 
       this.scene = Scene.scene
+
+      this.init()
    }
    
-   initHelper() {
+   init() {
       this.raycaster = new THREE.Raycaster()
+   }
+
+   initHelper() {
       this.rayOrigin = new THREE.Vector3(this.pos.x, this.pos.y, 0)
       this.rayDirection = new THREE.Vector3(this.dir.x, this.dir.y, 0)
       this.rayDirection.normalize()

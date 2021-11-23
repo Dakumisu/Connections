@@ -2,7 +2,7 @@ import { Store } from '@js/Store'
 
 import datas from '@src/json/connections.json'
 
-class FormDatas {
+class Datas {
    constructor() {
       this.datas = datas
 
@@ -11,6 +11,8 @@ class FormDatas {
 
    init() {
       Store.datas = this.datas
+
+      console.log(this.datas);
 
       // this.getProfile()
       // this.getPseudo()
@@ -106,5 +108,5 @@ class FormDatas {
    }
 }
 
-const out = new FormDatas()
+const out = new Datas()
 export default out

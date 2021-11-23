@@ -9,11 +9,11 @@ import fragment from '@glsl/fragment.frag'
 import bouleNoire from '@static/video/laboulenoir.mp4'
 import boulenoirAlpha from '@static/video/laboulenoirAlpha.mp4'
 
-class Blueprint {
+class DarkHole {
    constructor(opt) {
       this.scene = Scene.scene
 
-      this.blueprint = {}
+      this.darkHole = {}
 
       this.initialized = false
 
@@ -28,29 +28,14 @@ class Blueprint {
       this.setGeometry()
       this.setMaterial()
       this.setMesh()
-
-      this.initialized = true
-      // this.getVideo(bouleNoire).then(( value ) => {
-      //    this.videoTexture = value;
-
-      //    this.getVideo(boulenoirAlpha).then(( value ) => {
-      //       this.videoTextureAlpha = value;
-
-      //       this.setGeometry()
-      //       this.setMaterial()
-      //       this.setMesh()
-      
-      //       this.initialized = true
-      //    })
-      // })
    }
 
    setGeometry() {
-      this.blueprint.geometry = new PlaneBufferGeometry(1, 1, 1, 1)
+      this.darkHole.geometry = new PlaneBufferGeometry(1, 1, 1, 1)
    }
 
    setMaterial() {
-      this.blueprint.material = new ShaderMaterial({
+      this.darkHole.material = new ShaderMaterial({
          vertexShader: vertex,
          fragmentShader: fragment,
          uniforms: {
@@ -74,15 +59,16 @@ class Blueprint {
    }
 
    setMesh() {
-      this.blueprint.mesh = new Mesh(this.blueprint.geometry, this.blueprint.material)
-      this.blueprint.mesh.frustumCulled = false // https://threejs.org/docs/#api/en/core/Object3D.frustumCulled
+      this.darkHole.mesh = new Mesh(this.darkHole.geometry, this.darkHole.material)
+      this.darkHole.mesh.frustumCulled = false // https://threejs.org/docs/#api/en/core/Object3D.frustumCulled
 
-      this.add(this.blueprint.mesh)
+      this.add(this.darkHole.mesh)
    }
 
    add(mesh) {
-      console.log(mesh);
       this.scene.add(mesh)
+
+      this.initialized = true
    }
 
    getVideo(src) {
@@ -106,8 +92,8 @@ class Blueprint {
 
    resize() {
       window.addEventListener('resize', () => {
-         this.blueprint.material.uniforms.uAspect.value = new Vector2(Store.sizes.width, Store.sizes.height)
-         this.blueprint.material.uniforms.uPixelRatio.value = window.devicePixelRatio
+         this.darkHole.material.uniforms.uAspect.value = new Vector2(Store.sizes.width, Store.sizes.height)
+         this.darkHole.material.uniforms.uPixelRatio.value = window.devicePixelRatio
      })
    }
 
@@ -117,4 +103,4 @@ class Blueprint {
    }
 }
 
-export default Blueprint
+export default DarkHole

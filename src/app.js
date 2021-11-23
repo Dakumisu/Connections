@@ -11,13 +11,20 @@ import Control from '@js/Control' // Orbitcontrol (pour le debbugage)
 import Settings from '@js/Settings' // Dat.gui (toujours pour le debbugage)
 import Device from '@js/Device'
 import Raf from '@js/Raf'
+import Datas from '@js/Datas'
 
-import Blueprint from '@js/Blueprint'
+import DarkHole from '@js/DarkHole'
 import Themes from '@js/Themes'
-import FormDatas from '@js/FormDatas'
+import Users from '@js/Users'
+import Connections from '@js/Connections'
+// import User from '@js/User'
 
-const blueprint = new Blueprint()
-const themes = new Themes()
+console.log(Datas.datas.length);
+
+// const darkHole = new DarkHole()
+// const themes = new Themes()
+const users = new Users()
+const connections = new Connections()
 
 document.addEventListener('keydown', e => {
     console.log(`${e.key} touch pressed`)
@@ -27,7 +34,8 @@ Raf.suscribe('update', () => { update() })
 
 function update() {
     Scene.update()
-    blueprint.update()
-    themes.update()
+    // darkHole.update()
+    // themes.update()
+    users.update(Raf.timeElapsed)
     Control.controls.update()
 }
