@@ -3,6 +3,7 @@ import { Color, Mesh, MeshBasicMaterial, SphereBufferGeometry } from 'three'
 import Scene from '@js/Scene'
 import Raycaster from '@js/Raycaster'
 import Mouse from '@js/Mouse'
+import SphereParticles from '@js/SphereParticles'
 import { Store } from '@js/Store'
 
 import loadGLTF from '@utils/loader/loadGLTF'
@@ -14,14 +15,16 @@ class Themes {
       this.scene = Scene.scene
 
       this.themes = {}
+      this.sphereParticles = []
 
       this.initialized = false
       this.parseInitialized = false
 
-      this.init()
+      // this.init()
+      // this.start()
    }
 
-   init() {
+   start() {
       this.setGeometry()
       this.setMaterial()
      this.loadModel()
@@ -34,6 +37,7 @@ class Themes {
          this.setThemeName()
          this.parseTheme().then(() => {
 
+            this.addSphereParticles()
             this.addTheme()
             this.addThemeChild()
             this.add(this.themesModel)
@@ -65,11 +69,31 @@ class Themes {
       }
    }
 
+   addSphereParticles() {
+      // for (let i = 0; i < Store.list.themes.length; i++) {
+      //    const label
+      //    const pos = this.getPosition()
+      // }
+      // console.log(Store.list);
+
+      for (const label in this.themes) {
+         const pos = this.getPosition(label)
+
+         const sphereParticles = new SphereParticles()
+
+         sphereParticles.particles.mesh.position.copy(pos)
+
+         this.sphereParticles.push(sphereParticles)
+
+         // console.log(pos);
+      }
+   }
+
    createThemeMesh(theme) {
       const themeMesh = this.setMesh()
 
       themeMesh.position.copy(theme.position)
-      themeMesh.material.color = new Color(0xffffff)
+      themeMesh.material.color = new Color("#000")
       themeMesh.name = theme.name
 
       this.add(themeMesh)
@@ -78,7 +102,7 @@ class Themes {
    createThemeChildMesh(object, child) {
       child.mesh = this.setMesh()
 
-      child.mesh.scale.set(.3, .3, .3)
+      child.mesh.scale.set(.1, .1, .1)
 
       const pos = this.getPosition(object.theme.name)
 
@@ -160,8 +184,12 @@ class Themes {
       this.scene.add(object)
    }
 
-   update() {
+   update(time) {
       if (!this.initialized) return
+
+      this.sphereParticles.forEach(particle => {
+         particle.update(time)
+      })
 
       Raycaster.raycaster.setFromCamera(Mouse.mouseScene, Scene.camera)
 

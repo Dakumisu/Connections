@@ -15,14 +15,19 @@ import Datas from '@js/Datas'
 
 import DarkHole from '@js/DarkHole'
 import Themes from '@js/Themes'
+import SphereParticles from '@js/SphereParticles'
+import Univers from '@js/Univers'
 import Users from '@js/Users'
 import Connections from '@js/Connections'
 // import User from '@js/User'
 
 // const darkHole = new DarkHole()
-// const themes = new Themes()
 const users = new Users()
 const connections = new Connections()
+
+Themes.start()
+
+const univers = new Univers()
 
 document.addEventListener('keydown', e => {
     console.log(`${e.key} touch pressed`)
@@ -33,7 +38,8 @@ Raf.suscribe('update', () => { update() })
 function update() {
     Scene.update()
     // darkHole.update()
-    // users.update(Raf.timeElapsed)
-    Themes.update()
+    users.update(Raf.timeElapsed)
+    Themes.update(Raf.timeElapsed)
+    univers.update()
     Control.controls.update()
 }
