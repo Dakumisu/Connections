@@ -10,8 +10,6 @@ const tVec2a = new Vector2()
 
 class SphereParticles {
    constructor(opt) {
-      this.scene = Scene
-
       this.randomAxis = MathUtils.randFloat(0, 1)
 
       this.particles = {}
@@ -34,14 +32,13 @@ class SphereParticles {
    setAttributes() {
       const particlesCount = 2048 * 3
 
-      this.spherePositions = new Float32Array( particlesCount )
+      this.positions = new Float32Array( particlesCount )
       this.params = new Float32Array( particlesCount )
 
       for (let i = 0; i < particlesCount; i = i + 3) {
-
-         this.spherePositions[i + 0] = MathUtils.randFloatSpread(.15)
-         this.spherePositions[i + 1] = MathUtils.randFloatSpread(.15)
-         this.spherePositions[i + 2] = MathUtils.randFloatSpread(.15)
+         this.positions[i + 0] = MathUtils.randFloatSpread(.15)
+         this.positions[i + 1] = MathUtils.randFloatSpread(.15)
+         this.positions[i + 2] = MathUtils.randFloatSpread(.15)
          
          this.params[i + 0] = MathUtils.randFloatSpread(50) // Offset
          this.params[i + 1] = MathUtils.randFloat(.7, 1.3) // Random Scale
@@ -51,7 +48,7 @@ class SphereParticles {
 
    setGeometry() {
       const blueprintParticle = new PlaneBufferGeometry()
-      blueprintParticle.scale(.001, .001, .001)
+      blueprintParticle.scale(.01, .01, .01)
 
       this.particles.geometry = new InstancedBufferGeometry()
 
@@ -60,7 +57,7 @@ class SphereParticles {
       this.particles.geometry.attributes.normal = blueprintParticle.attributes.normal
       this.particles.geometry.attributes.uv = blueprintParticle.attributes.uv
 
-      this.particles.geometry.setAttribute( 'aPositions', new InstancedBufferAttribute( this.spherePositions, 3, false ) );
+      this.particles.geometry.setAttribute( 'aPositions', new InstancedBufferAttribute( this.positions, 3, false ) );
       this.particles.geometry.setAttribute( 'aParams', new InstancedBufferAttribute( this.params, 3, false ) )
    }
 
@@ -70,7 +67,7 @@ class SphereParticles {
          fragmentShader: fragment,
          uniforms: {
             uTime: { value : 0 },
-            uColor: { value: new Color(0xffffff) },
+            uColor: { value: new Color('#82A5FF') },
             uAlpha: { value: 1 },
             uRandomAxis: { value: this.randomAxis },
             uResolution : { value : tVec2a.set(Store.sizes.width, Store.sizes.height) },
@@ -94,7 +91,7 @@ class SphereParticles {
    }
 
    add(object) {
-      this.scene.scene.add(object)
+      Scene.scene.add(object)
    }
 
    resize() {

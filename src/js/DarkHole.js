@@ -11,8 +11,6 @@ import boulenoirAlpha from '@static/video/laboulenoirAlpha.mp4'
 
 class DarkHole {
    constructor(opt) {
-      this.scene = Scene.scene
-
       this.darkHole = {}
 
       this.initialized = false
@@ -28,6 +26,8 @@ class DarkHole {
       this.setGeometry()
       this.setMaterial()
       this.setMesh()
+
+      this.initialized = true
    }
 
    setGeometry() {
@@ -66,9 +66,7 @@ class DarkHole {
    }
 
    add(mesh) {
-      this.scene.add(mesh)
-
-      this.initialized = true
+      Scene.scene.add(mesh)
    }
 
    getVideo(src) {

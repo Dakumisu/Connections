@@ -6,15 +6,14 @@ import { Store } from '@js/Store'
 class User {
    constructor(opt) {
       this.datas = opt.datas
-      // this.profile = opt.datas.profile
-      // this.pseudo = opt.datas.pseudo
+      this.position = opt.position
 
-      // this.scene = Scene.scene
+      console.log(this.position);
 
       this.startPosition = new Vector3()
 
       this.user = {}
-      this.user.position = new Vector3()
+      this.user.position = this.position
 
       this.initialized = false
 
@@ -26,6 +25,8 @@ class User {
       this.setMaterial()
       this.setMesh()
       this.getPosition()
+
+      this.initialized = true
    }
 
    setGeometry() {
@@ -44,19 +45,11 @@ class User {
       this.user.mesh.pseudo = this.datas.pseudo
       this.user.mesh.profile = this.datas.profile
       
-      this.startPosition.x = this.user.mesh.profile == 'Dev' ? -5 - Math.random() : 5 + Math.random()
-      this.startPosition.y = .5 - Math.random() * 2.5
-      this.startPosition.z = .5 - Math.random() * 5.5
+      this.user.mesh.material.color = this.user.mesh.profile == 'Dev' ? new Color('#f00') : new Color('#00f')
+      // this.startPosition.y = .5 - Math.random() * 2.5
+      // this.startPosition.z = .5 - Math.random() * 5.5
 
-      this.user.mesh.position.copy(this.startPosition)
-
-      this.initialized = true
-      // this.add(this.user.mesh)
-   }
-
-   add(mesh) {
-      // this.scene.add(mesh)
-
+      this.user.mesh.position.copy(this.user.position)
    }
 
    getPosition() {

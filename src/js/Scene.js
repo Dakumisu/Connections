@@ -13,7 +13,7 @@ class Scene {
    init() {
       this.scene = new THREE.Scene()
       this.camera = new THREE.PerspectiveCamera(75, Store.sizes.width / Store.sizes.height, 0.01, 1000)
-      this.camera.position.set(0, 0, 6);  
+      this.camera.position.set(0, 0, 20);  
       this.renderer = new THREE.WebGLRenderer({
          canvas: this.canvas,
          powerPreference: 'high-performance',
@@ -22,7 +22,7 @@ class Scene {
       })
       this.renderer.setSize(Store.sizes.width, Store.sizes.height)
       this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-      this.renderer.setClearColor(0x222222, 1)
+      this.renderer.setClearColor(0x000000, 1)
 
       this.scene.add(this.camera)
    }

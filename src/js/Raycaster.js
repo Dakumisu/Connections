@@ -14,8 +14,6 @@ class Raycaster {
          this.initHelper()
       }
 
-      this.scene = Scene.scene
-
       this.init()
    }
    
@@ -38,7 +36,7 @@ class Raycaster {
       this.hex = 0xffffff
 
       this.arrowHelper = new THREE.ArrowHelper(this.rayDirection, this.rayOrigin, this.length, this.hex)
-      this.scene.add(this.arrowHelper)
+      Scene.scene.add(this.arrowHelper)
    }
 }
 

@@ -6,7 +6,6 @@ class LoadModel {
    constructor(opt) {
       this.name = opt.name // nom du model
       this.model = opt.model // lien du model (ex: '../assets/3D/model.glb')
-      this.scene = opt.scene
 
       this.loader = new GLTFLoader()
       this.dracoLoader = new DRACOLoader()
@@ -28,7 +27,7 @@ class LoadModel {
          }
       })
 
-      this.scene.add(this.modelMesh)
+      Scene.scene.add(this.modelMesh)
    }
 }
 

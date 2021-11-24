@@ -11,8 +11,6 @@ const tVec3b = new Vector3()
 
 class Connections {
    constructor(opt) {
-      this.datas = Datas.datas
-      this.users = Store.users
       this.themes = Themes
 
       this.connections = {}
@@ -23,14 +21,15 @@ class Connections {
 
       setTimeout(() => {
          this.addConnectionToThemes()
+         // this.updateConnections()
          this.addConnectionBetweenUsers()
-         this.updateConnections()
+         this.initialized = true
       }, 1000);
    }
 
    addConnectionToThemes() {
-      for (let i = 0; i < this.users.length; i++) {
-         const userData = this.users[i].datas
+      for (let i = 0; i < Store.users.length; i++) {
+         const userData = Store.users[i].datas
          const pseudo = userData.pseudo
          // console.log(`%c${userData.pseudo}`, "color:red");
          for (const label in userData) {
@@ -39,7 +38,7 @@ class Connections {
                this.splitData(userData[label]).forEach(e => { // ça renvoie le nom des sous categories
                   // console.log(`%c${e}`, "color:blue");
                   
-                  const tmpUserPos = this.users[i].user.position
+                  const tmpUserPos = Store.users[i].user.position
                   const tmpThemePos = this.themes.getChildPosition(label, e)
                   const themeChildTarget = e
                   const themeTarget = label
@@ -51,7 +50,8 @@ class Connections {
                      to: themeChildTarget,
                      parent: themeTarget,
                      color: '#ffffff',
-                     opacity: .05, 
+                     opacity: .1,
+                     alpha: 0.,
                      type: 'themes'
                   })
                   
@@ -65,8 +65,8 @@ class Connections {
    addConnectionBetweenUsers() {
       const users = []
 
-      for (const user in this.users) {
-         users.push(this.users[user])  
+      for (const user in Store.users) {
+         users.push(Store.users[user])  
       }
 
       let k = 1
@@ -84,8 +84,9 @@ class Connections {
                from: pseudo1,
                to: pseudo2,
                parent: '',
-               color: '#00ff00', 
-               opacity: 0.1, 
+               color: '#8265FF', 
+               opacity: .05,
+               alpha: 1.,
                type: 'users'
             })
             
@@ -99,15 +100,13 @@ class Connections {
 
    updateConnections() {
       for (let i = 0; i < this.connections.themes.length; i++) {
-         // const tmpUserPos = this.users[i].user.position
+         // const tmpUserPos = Store.users[i].user.position
          // this.connections.themes[i].line.mesh.geometry
       }
    }
 
    addToGroup(object) {
-      this.scene.add(object)
-
-      this.initialized = true
+      Scene.scene.add(object)
    }
 
    splitData(data) {
@@ -116,9 +115,15 @@ class Connections {
       return tmpData
    }
 
-   update() {
+   update(time) {
       if (!this.initialized) return
-
+      
+      this.connections.themes.forEach(connection => {
+         connection.update(time)
+      })
+      this.connections.users.forEach(connection => {
+         connection.update(time)
+      })
    }
 }
 

@@ -1,28 +1,26 @@
-import * as THREE from 'three'
+import { Vector2, Vector3 } from 'three'
 
 import Scene from '@js/Scene'
 
 class Mouse {
    constructor(opt) {
-      this.scene = Scene
-
       this.init()
       this.mouseMove()
    }
 
    init() {
       // Position de la souris dans le DOM
-      this.mouseDom = new THREE.Vector2()
+      this.mouseDom = new Vector2()
 
       // Position de la souris à utiliser dans fragment shader si besoin (x: [0, 1], y:[0, 1])
-      this.mouseFrag = new THREE.Vector3()
+      this.mouseFrag = new Vector3()
 
       // Position de la souris dans la scène (x: [-1, 1], y:[-1, 1])
-      this.mouseScene = new THREE.Vector3()
+      this.mouseScene = new Vector3()
       
       // Position de la souris dans la scène par rapport à la taille du DOM et de la caméra (x: [?, ?], y:[?, ?])
       // ❗ Expérimental
-      this.mouseMap = new THREE.Vector3()
+      this.mouseMap = new Vector3()
    }
 
    mouseMove() {
@@ -46,11 +44,11 @@ class Mouse {
    }
 
    viewSize() {
-      let cameraZ = this.scene.camera.position.z
+      let cameraZ = Scene.camera.position.z
       let distance = cameraZ - 0
-      let aspect = this.scene.camera.aspect
+      let aspect = Scene.camera.aspect
 
-      let vFov = this.scene.camera.fov * Math.PI / 180
+      let vFov = Scene.camera.fov * Math.PI / 180
       let height = 2 * Math.tan(vFov / 2) * distance
       let width = height * aspect
 

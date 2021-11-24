@@ -8,12 +8,10 @@ import { Store } from '@js/Store'
 
 import loadGLTF from '@utils/loader/loadGLTF'
 
-import theme from '@model/testpoints2.glb'
+import theme from '@model/themes.glb'
 
 class Themes {
    constructor(opt) {
-      this.scene = Scene.scene
-
       this.themes = {}
       this.sphereParticles = []
 
@@ -41,6 +39,7 @@ class Themes {
             this.addTheme()
             this.addThemeChild()
             this.add(this.themesModel)
+            
             this.initialized = true
          })
       })
@@ -92,8 +91,10 @@ class Themes {
    createThemeMesh(theme) {
       const themeMesh = this.setMesh()
 
+      themeMesh.material.color = new Color("#82A5FF")
+
+      themeMesh.scale.set(.75, .75, .75)
       themeMesh.position.copy(theme.position)
-      themeMesh.material.color = new Color("#000")
       themeMesh.name = theme.name
 
       this.add(themeMesh)
@@ -101,8 +102,10 @@ class Themes {
 
    createThemeChildMesh(object, child) {
       child.mesh = this.setMesh()
+      
+      child.mesh.material.color = new Color('#82A5FF')
 
-      child.mesh.scale.set(.1, .1, .1)
+      child.mesh.scale.set(.075, .075, .075)
 
       const pos = this.getPosition(object.theme.name)
 
@@ -177,11 +180,12 @@ class Themes {
    
    setMesh() {
       const sphereMesh = new Mesh(this.sphereGeo, this.setMaterial())
+
       return sphereMesh
    }
    
    add(object) {
-      this.scene.add(object)
+      Scene.scene.add(object)
    }
 
    update(time) {

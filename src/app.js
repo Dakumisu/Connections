@@ -3,7 +3,8 @@ import './main.scss'
 import { TweenLite, TweenMax, gsap } from 'gsap' // https://greensock.com/docs/
 import howlerjs from 'howler' // https://github.com/goldfire/howler.js#documentation
 
-import Scene from '@js/Scene' // Création de la scène + renderer + camera
+import Scene from '@js/Scene'
+import PostProcessing from '@js/PostProcessing' // Création de la scène + renderer + camera
 import LoadModel from '@js/LoadModel' // Chargement d'un modèle 3D
 import Mouse from '@js/Mouse' // Obtenir la position de la souris dans tous les environnement
 import Raycaster from '@js/Raycaster' // Création de raycasters si besoin
@@ -15,6 +16,7 @@ import Datas from '@js/Datas'
 
 import DarkHole from '@js/DarkHole'
 import Themes from '@js/Themes'
+import ParticlesTrails from '@js/ParticlesTrails'
 import SphereParticles from '@js/SphereParticles'
 import Univers from '@js/Univers'
 import Users from '@js/Users'
@@ -27,7 +29,7 @@ const connections = new Connections()
 
 Themes.start()
 
-const univers = new Univers()
+// const univers = new Univers()
 
 document.addEventListener('keydown', e => {
     console.log(`${e.key} touch pressed`)
@@ -36,10 +38,12 @@ document.addEventListener('keydown', e => {
 Raf.suscribe('update', () => { update() })
 
 function update() {
-    Scene.update()
+    // Scene.update()
+    PostProcessing.update()
     // darkHole.update()
-    users.update(Raf.timeElapsed)
+    // users.update(Raf.timeElapsed)
+    connections.update(Raf.timeElapsed)
     Themes.update(Raf.timeElapsed)
-    univers.update()
+    // univers.update()
     Control.controls.update()
 }

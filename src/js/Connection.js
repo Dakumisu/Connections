@@ -1,14 +1,14 @@
-import { BufferGeometry, Color, Line, LineBasicMaterial, LineCurve3, LineDashedMaterial, MathUtils, Object3D, QuadraticBezierCurve3, Vector3 } from 'three'
-import { MeshLine, MeshLineMaterial } from 'three.meshline';
+import { BufferGeometry, Color, Line, LineBasicMaterial, LineCurve3, LineDashedMaterial, MathUtils, QuadraticBezierCurve3, Vector3 } from 'three'
 
 import Scene from '@js/Scene'
+import ParticlesTrails from '@js/ParticlesTrails'
 import { Store } from '@js/Store'
 
 import { map } from '@utils/maths'
 
 const tVec3a = new Vector3()
 const tVec3b = new Vector3()
-const dummy = new Object3D()
+const tVec3c = new Vector3()
 class Connections {
    constructor(opt) {
       this.start = opt.start
@@ -18,9 +18,8 @@ class Connections {
       this.parent = opt.parent
       this.color = opt.color
       this.opacity = opt.opacity
+      this.alpha = opt.alpha
       this.type = opt.type
-
-      this.scene = Scene.scene
 
       this.line = {}
       this.line.id = ` ${this.parent} ${this.from} ${this.to}`
@@ -28,13 +27,15 @@ class Connections {
       this.line.connect.to = this.from
       this.line.connect.from = this.to
 
-      this.points = []
+      this.points = null
       this.subdivisions = 50
 
       this.limit = {}
       this.limit.x = 5
       this.limit.y = 3
       this.limit.z = 5
+
+      this.particlesTrails = []
 
       this.initialized = false
 
@@ -45,45 +46,61 @@ class Connections {
       this.setGeometry()
       this.setMaterial()
       this.setLineMesh()
+
+      if (this.type == 'users') this.addParticlesTrails()
+
+      this.initialized = true
+   }
+
+   addParticlesTrails() {
+      const particlesTrails = new ParticlesTrails({
+         start: this.start,
+         end: this.end,
+         strength: this.strength,
+         curve: this.curve,
+         middle: this.middle,
+         color: this.color,
+         alpha: this.alpha
+      })
+
+      this.particlesTrails.push(particlesTrails)
    }
 
    setGeometry() {
-      this.subdivisions = 20
+      this.subdivisions = 50
       
-      this.points.push(this.start)
-      this.points.push(this.end)
+      // this.points.push(this.start)
+      // this.points.push(this.end)
 
       this.line.geometry = new BufferGeometry()
 
       // const points = []
-      const curve = new QuadraticBezierCurve3()
+      this.curve = new QuadraticBezierCurve3()
 
       const middleX = (this.start.x + this.end.x) / 2
       const middleY = (this.start.y + this.end.y) / 2
       const middleZ = (this.start.z + this.end.z) / 2
 
+      this.middle = tVec3c.set(middleX, middleY, middleZ)
+
       const { strength } = this.getStrength(this.start, this.end)
-      const random = MathUtils.randFloatSpread(3)
+      const random = MathUtils.randFloatSpread(2)
 
-      // console.log(strength, random);
+      this.strength = {
+         x: random * strength.x,
+         y: random * strength.y,
+         z: random * strength.z,
+      }
       
-      tVec3a.set(middleX + (random * strength.x), middleY + (random * strength.y), middleZ + (random * strength.z))
+      tVec3a.set(middleX + this.strength.x, middleY + this.strength.y, middleZ + this.strength.z)
 
-      curve.v0 = this.start
-      curve.v1 = tVec3a
-      curve.v2 = this.end
+      this.curve.v0 = this.start
+      this.curve.v1 = tVec3a
+      this.curve.v2 = this.end
 
-      const points = curve.getPoints(50)
-      // console.log(points);
-      // console.log(this.line.geometry)
-      // for (let j = 0; j < this.subdivisions; j++) {
-      //    points.push( curve.getPoint(j / this.subdivisions) )
-      // }
+      this.points = this.curve.getPoints( 200 )
       
-      // this.line.geometry = new MeshLine()
-      // this.line.geometry.setPoints(points.flat());
-      
-      this.line.geometry.setFromPoints( points );
+      this.line.geometry.setFromPoints( this.points );
    }
 
    getStrength(start, end) {
@@ -93,7 +110,7 @@ class Connections {
       let z = start.z - end.z
 
       strength.x = x
-      strength.y = y * ((z + x) * .5)
+      strength.y = y * ((z + x) * .2)
       strength.z = z
       
       x = map(x, -5, 20, 0, 1)
@@ -116,8 +133,6 @@ class Connections {
       this.line.material = new LineBasicMaterial({
          color: new Color(this.color),
          linewidth: .5,
-         // dashSize: .1, 
-         // gapSize: .05, 
          transparent: true,
          depthTest: true
       })
@@ -136,20 +151,15 @@ class Connections {
    }
 
    add(mesh) {
-      this.scene.add(mesh)
-
-      this.initialized = true
+      Scene.scene.add(mesh)
    }
 
-   // getPosition() {
-   //    this.line.position.copy(this.line.mesh.position)
-
-   //    return this.line.position
-   // }
-
-   update() {
+   update(time) {
       if (!this.initialized) return
 
+      this.particlesTrails.forEach(particlesTrail => {
+         particlesTrail.update(time)
+      })
    }
 }
 
