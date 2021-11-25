@@ -27,7 +27,7 @@ class Scene {
       })
       this.renderer.setSize(Store.sizes.width, Store.sizes.height)
       this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-      this.renderer.setClearColor(0x000000, 1)
+      // this.renderer.setClearColor(0x000000, 1)
 
       this.scene.add(this.camera)
    }
@@ -49,8 +49,8 @@ class Scene {
    }
 
    update() {
-      this.camera.position.x = Math.cos(Raf.timeElapsed *.005) * twoPi
-      this.camera.position.y = Math.sin(Raf.timeElapsed *.005) * twoPi
+      // this.camera.position.x = Math.cos(Raf.timeElapsed *.005) * twoPi
+      // this.camera.position.y = Math.sin(Raf.timeElapsed *.005) * twoPi
    }
    
    render () {

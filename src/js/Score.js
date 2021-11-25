@@ -8,9 +8,13 @@ class Score {
 
       this.initialized = false
       
-      setTimeout(() => {
-         this.setScore()
-      }, 1);
+      // setTimeout(() => {
+      //    this.setScore()
+      // }, 1);
+   }
+
+   start() {
+      this.setScore()
    }
 
    setScore() {
@@ -58,15 +62,15 @@ class Score {
 
       this.score = score
 
-      // this.getCommonalitiesCount('Daku', 'Arles')
+      // this.getCommonalities('Daku', 'Arles')
       // this.getScore('Daku', 'Arles')
-      // this.getHighScore('Daku')
+      console.log(this.getHighScore('Amb').scores);
       // this.getWorstScore('Daku')
 
       this.initialized = true
    }
 
-   getCommonalitiesCount(name1, name2) {
+   getCommonalities(name1, name2) {
       const commonalities = []
       
       for (let i = 0; i < Store.list.themes.length; i++) {
@@ -75,21 +79,31 @@ class Score {
          })
       }
       
-      return commonalities.length
+      return commonalities
    }
 
    getHighScore(name1) {
       const highScore = {}
       highScore.score = 0
+      highScore.scores = []
 
       for (const user in this.score[name1]) {
-         if (highScore.score < this.score[name1][user].score) {
+         let test1 = this.getPourcent(highScore.score, this.getMaxScore(name1))
+         let test2 = this.getPourcent(this.score[name1][user].score, this.getMaxScore(name1))
+         // console.log(test1, test2);
+         if ( test1 < test2 ) {
             highScore.score = this.score[name1][user].score
             highScore.name = this.score[name1][user].name
+         } 
+      }
+
+      for (const user in this.score[name1]) {
+         if (highScore.score == this.score[name1][user].score) {
+            highScore.scores.push(this.score[name1][user])
          }
       }
 
-      highScore.pourcent = this.getPourcent(highScore.score, this.getMaxScore(highScore.name))
+      highScore.pourcent = this.getPourcent(highScore.score, this.getMaxScore(name1))
       highScore.norm = this.getNorm(highScore.pourcent)
 
       return highScore;
@@ -106,7 +120,7 @@ class Score {
          }
       }
 
-      worstScore.pourcent = this.getPourcent(worstScore.score, this.getMaxScore(worstScore.name))
+      worstScore.pourcent = this.getPourcent(worstScore.score, this.getMaxScore(name1))
       worstScore.norm = this.getNorm(worstScore.pourcent)
 
       return worstScore
@@ -114,7 +128,7 @@ class Score {
 
    getScore(name1, name2) {
       const tmpScore = this.score[name1][name2].score
-      const maxScore = this.getMaxScore(name2)
+      const maxScore = this.getMaxScore(name1)
 
       const userScore = {}
       userScore.pourcent = this.getPourcent(tmpScore, maxScore)

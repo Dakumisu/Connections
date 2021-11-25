@@ -10,6 +10,7 @@ uniform vec2 uResolution;
 
 varying float vLoop;
 varying float vRandomScale;
+varying float vTrailProgress;
 varying vec2 vUv;
 varying vec3 vPos;
 
@@ -28,6 +29,9 @@ void main() {
 
   float alpha = smoothstep(1., .75, vLoop) * smoothstep(.0, .25, vLoop) * (vPos.x +  vPos.y +  vPos.z + uAlpha);
   alpha *= vRandomScale;
+  // alpha *= vTrailProgress * (.5 - sin(uTime * .005) * .5);
+  alpha *= .5 + cos(PI + (vTrailProgress + (uTime * .002)) * (PI * 2.)) * .5;
+  
 
   gl_FragColor = vec4(particle, alpha);
   // gl_FragColor = vec4(vec3(1.), uAlpha);

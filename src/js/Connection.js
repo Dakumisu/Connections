@@ -51,16 +51,18 @@ class Connections {
 
       if (this.type == 'users') {
          // console.log(this.from, this.to, Score.getScore(this.from, this.to).norm, Score.getHighScore(this.from).norm);
-         if ( Score.getScore(this.from, this.to).norm == Score.getHighScore(this.from).norm ) { // Best Macth
-            this.alpha = .75
-            this.color = new Color('#0f0')
-         } else if ( Score.getScore(this.from, this.to).norm == Score.getWorstScore(this.from).norm ) { // Worst Match
-            this.alpha = .75
-            this.color = new Color('#f00')
+         if ( Score.getScore(this.from, this.to).pourcent == Score.getHighScore(this.from).pourcent ) { // Best Macth
+            // console.log(this.from, 'friend', this.to, Score.getScore(this.from, this.to).pourcent);
+            this.alpha = Store.alpha.goodMatch
+            this.color = new Color(Store.colors.goodMatch)
+         } else if ( Score.getScore(this.from, this.to).pourcent == Score.getWorstScore(this.from).pourcent ) { // Worst Match
+            // console.log(this.from, 'hate', this.to, Score.getScore(this.from, this.to).pourcent);
+            this.alpha = Store.alpha.badMatch
+            this.color = new Color(Store.colors.badMatch)
          } else {
-            this.alpha = 0.5
-            this.scale = 0.15
-            // this.color = new Color('#000')
+            this.alpha = Store.alpha.badMatch
+            this.scale = 0.15 // SCALE
+            this.color = new Color(Store.colors.default)
          }
 
          this.addParticlesTrails()

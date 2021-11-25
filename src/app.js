@@ -24,11 +24,11 @@ import Users from '@js/Users'
 import Connections from '@js/Connections'
 // import User from '@js/User'
 
-// const darkHole = new DarkHole()
-const users = new Users()
-const connections = new Connections()
+const darkHole = new DarkHole()
+// const users = new Users()
+// const connections = new Connections()
 
-Themes.start()
+// Themes.start()
 
 // const univers = new Univers()
 
@@ -39,12 +39,12 @@ document.addEventListener('keydown', e => {
 Raf.suscribe('update', () => { update() })
 
 function update() {
-    PostProcessing.render()
-    Scene.update()
-    // darkHole.update()
+    Scene.render()
+    // PostProcessing.render()
+    darkHole.update()
     // users.update(Raf.timeElapsed)
-    connections.update()
-    Themes.update()
+    // connections.update()
+    // Themes.update()
     // univers.update()
     Control.controls.update()
 }

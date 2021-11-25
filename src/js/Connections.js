@@ -31,12 +31,12 @@ class Connections {
       for (const user in Store.users) {
          const userData = Store.users[user].datas
          const pseudo = userData.pseudo
-         console.log(`%c${userData.pseudo}`, "color:red");
+         // console.log(`%c${userData.pseudo}`, "color:red");
          for (const label in userData) {
-            if (label != 'profile' && label != 'pseudo' && userData[label] != 'RIEN') {
-               console.log(`%c${label}`, "color:green");
+            if (label != 'profile' && label != 'pseudo' && userData[label] != 'NOTHING') {
+               // console.log(`%c${label}`, "color:green");
                this.splitData(userData[label]).forEach(e => { // ça renvoie le nom des sous categories
-                  console.log(`%c${e}`, "color:blue");
+                  // console.log(`%c${e}`, "color:blue");
                   
                   const tmpUserPos = Store.users[user].user.position
                   const tmpThemePos = this.themes.getChildPosition(label, e)

@@ -42,8 +42,10 @@ class User {
       
       this.user.mesh.pseudo = this.datas.pseudo
       this.user.mesh.profile = this.datas.profile
+
+      const color = this.user.mesh.profile == 'Dev' ? '#A7AA26' : '#26AA6B'
+      this.user.mesh.material.color = new Color(color)
       
-      this.user.mesh.material.color = this.user.mesh.profile == 'Dev' ? new Color('#f00') : new Color('#00f')
       // this.startPosition.y = .5 - Math.random() * 2.5
       // this.startPosition.z = .5 - Math.random() * 5.5
 

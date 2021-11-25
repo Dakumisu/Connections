@@ -19,25 +19,25 @@ export const Store = {
       ],
       themesChilds: {
          animal: [
-            "Chien",
-            "Chat",
-            "Tortue",
+            "Dog",
+            "Cat",
+            "Turtle",
          ],
          art: [
-            "Abstrait",
+            "Abstract",
             "Pop Art",
-            "Romantisme",
-            "Surréalisme",
-            "Impressionnisme",
+            "Romanticism",
+            "Surrealism",
+            "Impressionism",
          ],
          bookType: [
-            "Poésie",
-            "Roman",
-            "Essai",
-            "BD",
+            "Poetry",
+            "Novel",
+            "Essay",
+            "Comics",
             "Manga",
-            "Biographie",
-            "Documentaire",
+            "Biography",
+            "Documentary",
          ],
          design: [
             "2D",
@@ -45,15 +45,15 @@ export const Store = {
          ],
          event: [
             "Concert",
-            "Cinéma",
-            "Expo",
-            "Théâtre",
+            "Cinema",
+            "Art exhibition",
+            "Theater",
          ],
          food: [
-            "Asiatique",
-            "Italien",
-            "Français",
-            "Indien",
+            "Asian",
+            "Italian",
+            "French",
+            "Indian",
             "Fast-Food",
          ],
          game: [
@@ -61,21 +61,21 @@ export const Store = {
             "MMO",
             "FPS",
             "MOBA",
-            "Stratégie",
-            "Jeux de combat",
+            "Strategy",
+            "Fighting game",
             "Simulation",
          ],
          movieType: [
             "Action",
-            "Thriller/Policier",
+            "Thriller",
             "SF",
             "Fantastique",
             "Animation",
-            "Comédie",
-            "Horreur",
+            "Comedy",
+            "Horror",
          ],
          music: [
-            "Classique",
+            "Classical",
             "Rap",
             "Rock",
             "Electro",
@@ -93,7 +93,7 @@ export const Store = {
             "Foot",
             "Basket",
             "Rugby",
-            "Natation",
+            "Swimming",
             "Tennis",
          ]
       }
@@ -144,5 +144,15 @@ export const Store = {
          childs: {}
       }
    },
-   users: null
+   users: null,
+   colors: {
+      goodMatch: '#82A5FF',
+      badMatch: '#AA2626',
+      default: '#CB98FF',
+   },
+   alpha: {
+      goodMatch: 1.,
+      badMatch: .5,
+      default: 1.,
+   }
 }

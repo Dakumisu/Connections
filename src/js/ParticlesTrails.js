@@ -107,6 +107,7 @@ class ParticlesTrails {
 
       this.positions = new Float32Array( particlesCount )
       this.params = new Float32Array( particlesCount )
+      this.paramsProgress = new Float32Array( particlesCount )
 
       let j = 0
 
@@ -117,7 +118,11 @@ class ParticlesTrails {
          
          this.params[i + 0] = MathUtils.randFloatSpread(50) // Offset
          this.params[i + 1] = MathUtils.randFloat(.7, 1.3) // Random Scale
-         this.params[i + 2] = .5 + Math.cos(Math.PI + (i / particlesCount) * (Math.PI * 2)) * .5 // progress
+         this.params[i + 2] = 0
+         
+         this.paramsProgress[i + 0] = .5 + Math.cos(Math.PI + (i / particlesCount) * (Math.PI * 2)) * .5 // progress
+         this.paramsProgress[i + 1] = (i * 10) / particlesCount
+         this.paramsProgress[i + 2] = 0
 
          j++
       }
@@ -136,6 +141,7 @@ class ParticlesTrails {
 
       this.particles.geometry.setAttribute( 'aPositions', new InstancedBufferAttribute( this.positions, 3, false ) );
       this.particles.geometry.setAttribute( 'aParams', new InstancedBufferAttribute( this.params, 3, false ) )
+      this.particles.geometry.setAttribute( 'aParamsProgress', new InstancedBufferAttribute( this.paramsProgress, 3, false ) )
    }
 
    setMaterial() {
