@@ -12,8 +12,6 @@ class Datas {
    init() {
       Store.datas = this.datas
 
-      console.log(this.datas);
-
       // this.getProfile()
       // this.getPseudo()
       // this.getAnimal()

@@ -37,7 +37,7 @@ class PostProcessing {
       this.composer.addPass( this.bloomPass );
    }
 
-   update() {
+   render() {
       this.composer.render()
    }
 }

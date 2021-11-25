@@ -188,11 +188,11 @@ class Themes {
       Scene.scene.add(object)
    }
 
-   update(time) {
+   update() {
       if (!this.initialized) return
 
       this.sphereParticles.forEach(particle => {
-         particle.update(time)
+         particle.update()
       })
 
       Raycaster.raycaster.setFromCamera(Mouse.mouseScene, Scene.camera)

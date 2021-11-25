@@ -21,24 +21,24 @@ class Connections {
 
       setTimeout(() => {
          this.addConnectionToThemes()
-         // this.updateConnections()
          this.addConnectionBetweenUsers()
+         // this.updateConnections()
          this.initialized = true
-      }, 1000);
+      }, 2000);
    }
 
    addConnectionToThemes() {
-      for (let i = 0; i < Store.users.length; i++) {
-         const userData = Store.users[i].datas
+      for (const user in Store.users) {
+         const userData = Store.users[user].datas
          const pseudo = userData.pseudo
-         // console.log(`%c${userData.pseudo}`, "color:red");
+         console.log(`%c${userData.pseudo}`, "color:red");
          for (const label in userData) {
             if (label != 'profile' && label != 'pseudo' && userData[label] != 'RIEN') {
-               // console.log(`%c${label}`, "color:green");
+               console.log(`%c${label}`, "color:green");
                this.splitData(userData[label]).forEach(e => { // ça renvoie le nom des sous categories
-                  // console.log(`%c${e}`, "color:blue");
+                  console.log(`%c${e}`, "color:blue");
                   
-                  const tmpUserPos = Store.users[i].user.position
+                  const tmpUserPos = Store.users[user].user.position
                   const tmpThemePos = this.themes.getChildPosition(label, e)
                   const themeChildTarget = e
                   const themeTarget = label
@@ -50,8 +50,7 @@ class Connections {
                      to: themeChildTarget,
                      parent: themeTarget,
                      color: '#ffffff',
-                     opacity: .1,
-                     alpha: 0.,
+                     opacity: .05,
                      type: 'themes'
                   })
                   
@@ -71,31 +70,31 @@ class Connections {
 
       let k = 1
       for (let i = 0; i < users.length; i++) {         
-         for (let j = k; j < users.length; j++) {
+         for (let j = 0; j < users.length; j++) {
             const pseudo1 = users[i].datas.pseudo
             const pseudo2 = users[j].datas.pseudo
 
-            const tmpUser1Pos = users[i].user.position
-            const tmpUser2Pos = users[j].user.position
-
-            const connection = new Connection({
-               start: tVec3a.copy(tmpUser1Pos),
-               end: tVec3b.copy(tmpUser2Pos),
-               from: pseudo1,
-               to: pseudo2,
-               parent: '',
-               color: '#8265FF', 
-               opacity: .05,
-               alpha: 1.,
-               type: 'users'
-            })
-            
-            this.connections.users.push(connection)
+            if (pseudo1 != pseudo2) {
+               const tmpUser1Pos = users[i].user.position
+               const tmpUser2Pos = users[j].user.position
+   
+               const connection = new Connection({
+                  start: tVec3a.copy(tmpUser1Pos),
+                  end: tVec3b.copy(tmpUser2Pos),
+                  from: pseudo1,
+                  to: pseudo2,
+                  parent: '',
+                  color: '#8265FF', 
+                  opacity: .05,
+                  type: 'users'
+               })
+               
+               this.connections.users.push(connection)
+            }
          }
 
          k++
       }
-      console.log(users);
    }
 
    updateConnections() {
@@ -115,14 +114,14 @@ class Connections {
       return tmpData
    }
 
-   update(time) {
+   update() {
       if (!this.initialized) return
       
       this.connections.themes.forEach(connection => {
-         connection.update(time)
+         connection.update()
       })
       this.connections.users.forEach(connection => {
-         connection.update(time)
+         connection.update()
       })
    }
 }

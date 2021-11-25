@@ -1,4 +1,4 @@
-import { BoxBufferGeometry, Color, Mesh, MeshBasicMaterial, Vector3 } from 'three'
+import { BoxBufferGeometry, Color, Mesh, MeshBasicMaterial, SphereBufferGeometry, Vector3 } from 'three'
 
 import Scene from '@js/Scene'
 import { Store } from '@js/Store'
@@ -7,8 +7,6 @@ class User {
    constructor(opt) {
       this.datas = opt.datas
       this.position = opt.position
-
-      console.log(this.position);
 
       this.startPosition = new Vector3()
 
@@ -30,7 +28,7 @@ class User {
    }
 
    setGeometry() {
-      this.user.geometry = new BoxBufferGeometry(.05, .05, .05, 1, 1, 1)
+      this.user.geometry = new SphereBufferGeometry(.04, 16, 8)
    }
 
    setMaterial() {
@@ -58,7 +56,7 @@ class User {
       return this.user.position
    }
 
-   update(time) {
+   update() {
       if (!this.initialized) return
 
       // this.user.mesh.position.x = this.startPosition.x + (.5 - Math.sin(time *.001) * .5)

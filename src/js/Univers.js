@@ -77,7 +77,7 @@ class Univers {
       Scene.scene.add(object)
    }
 
-   update(time) {
+   update() {
       if (!this.initialized) return
 
       this.target.x = -Mouse.mouseScene.x * 0.4;

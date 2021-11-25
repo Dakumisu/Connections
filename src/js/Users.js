@@ -23,7 +23,7 @@ class Users {
    }
 
    addUser() {
-      const sphereGeometry = new SphereBufferGeometry(10, 16, 16)
+      const sphereGeometry = new SphereBufferGeometry(6, 16, 16)
       const sphereGeometryPos = sphereGeometry.attributes.position.array
       const usersPos = []
 
@@ -36,17 +36,12 @@ class Users {
 
          usersPos.push(new Vector3(sphereGeometryPos[random + i], sphereGeometryPos[random + i + 1], sphereGeometryPos[random + i + 2]))
 
-         // this.users[j].user.mesh.position.copy(usersPos[j])
-
-         
-         // console.log(usersPos[j]);
-         
          const user = new User({
             datas: dataUser,
             position: usersPos[j]
          })
          
-         this.users.push(user)
+         this.users[dataUser.pseudo] = user
          
          this.addToGroup(user.user.mesh)
 
@@ -79,11 +74,6 @@ class Users {
 
          j++
       }
-
-      // for (let i = 0; i < usersPos.length; i++) {
-      //    this.users[i].user.mesh.position.copy(usersPos[i])
-         
-      // }
    }
 
    addToGroup(object) {
@@ -97,11 +87,11 @@ class Users {
       Scene.scene.add(object)
    }
 
-   update(time) {
+   update() {
       if (!this.initialized) return
 
       this.users.forEach(user => {
-        user.update(time) 
+        user.update() 
       })
    }
 }

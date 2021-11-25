@@ -1,5 +1,6 @@
 import { AdditiveBlending, BufferGeometry, Color, DoubleSide, InstancedBufferAttribute, InstancedBufferGeometry, LinearFilter, MathUtils, Mesh, PlaneBufferGeometry, QuadraticBezierCurve3, RGBFormat, ShaderMaterial, SphereBufferGeometry, Vector2, Vector3, VideoTexture } from 'three'
 
+import Raf from '@js/Raf'
 import Scene from '@js/Scene'
 import { Store } from '@js/Store'
 
@@ -22,11 +23,12 @@ class ParticlesTrails {
       this.middle = opt.middle
       this.color = new Color(opt.color)
       this.alpha = opt.alpha
+      this.scale = opt.scale
       this.dir = Math.sign(.5 - Math.random())
 
       // console.log(this.curve);
 
-      this.points = this.curve.getPoints( 500 )
+      this.points = this.curve.getPoints( 2000 )
       // * ((this.middle.x + this.middle.y + this.middle.z) * 2)
       
       tVec3a.set(this.strength.x, this.strength.y, this.strength.z)
@@ -96,11 +98,6 @@ class ParticlesTrails {
       strength.x *= x
       strength.y *= y
       strength.z *= z
-      
-      // console.log(strength.x, strength.x, strength.z);
-      // if (x < this.limit.x) strength.x = .1
-      // if (y < this.limit.y) strength.y = .1
-      // if (z < this.limit.z) strength.z = .1
 
       return { strength }
    }
@@ -128,7 +125,7 @@ class ParticlesTrails {
 
    setGeometry() {
       const blueprintParticle = new PlaneBufferGeometry()
-      blueprintParticle.scale(.01, .01, .01)
+      blueprintParticle.scale(.01 * this.scale, .01 * this.scale, .01 * this.scale)
 
       this.particles.geometry = new InstancedBufferGeometry()
 
@@ -152,6 +149,7 @@ class ParticlesTrails {
             uColor: { value: this.color },
             uAlpha: { value: this.alpha},
             uStrength: { value: tVec3a },
+            uScale: { value: this.scale },
             uDir: { value: this.dir },
             uResolution : { value : tVec2a.set(Store.sizes.width, Store.sizes.height) },
             uPixelRatio: { value: window.devicePixelRatio },
@@ -184,10 +182,10 @@ class ParticlesTrails {
      })
    }
 
-   update(time) {
+   update() {
       if (!this.initialized) return
 
-      this.particles.mesh.material.uniforms.uTime.value = time
+      this.particles.mesh.material.uniforms.uTime.value = Raf.timeElapsed
    }
 }
 

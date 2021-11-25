@@ -13,6 +13,7 @@ import Settings from '@js/Settings' // Dat.gui (toujours pour le debbugage)
 import Device from '@js/Device'
 import Raf from '@js/Raf'
 import Datas from '@js/Datas'
+import Score from '@js/Score'
 
 import DarkHole from '@js/DarkHole'
 import Themes from '@js/Themes'
@@ -38,12 +39,12 @@ document.addEventListener('keydown', e => {
 Raf.suscribe('update', () => { update() })
 
 function update() {
-    // Scene.update()
-    PostProcessing.update()
+    PostProcessing.render()
+    Scene.update()
     // darkHole.update()
     // users.update(Raf.timeElapsed)
-    connections.update(Raf.timeElapsed)
-    Themes.update(Raf.timeElapsed)
+    connections.update()
+    Themes.update()
     // univers.update()
     Control.controls.update()
 }

@@ -1,5 +1,6 @@
 import { AdditiveBlending, Color, DoubleSide, InstancedBufferAttribute, InstancedBufferGeometry, LinearFilter, log, MathUtils, Mesh, PlaneBufferGeometry, RGBFormat, ShaderMaterial, SphereBufferGeometry, Vector2, VideoTexture } from 'three'
 
+import Raf from '@js/Raf'
 import Scene from '@js/Scene'
 import { Store } from '@js/Store'
 
@@ -101,10 +102,10 @@ class SphereParticles {
      })
    }
 
-   update(time) {
+   update() {
       if (!this.initialized) return
 
-      this.particles.mesh.material.uniforms.uTime.value = time
+      this.particles.mesh.material.uniforms.uTime.value = Raf.timeElapsed
    }
 }
 

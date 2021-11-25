@@ -1,5 +1,6 @@
 import { BufferGeometry, Color, Line, LineBasicMaterial, LineCurve3, LineDashedMaterial, MathUtils, QuadraticBezierCurve3, Vector3 } from 'three'
 
+import Score from '@js/Score'
 import Scene from '@js/Scene'
 import ParticlesTrails from '@js/ParticlesTrails'
 import { Store } from '@js/Store'
@@ -18,7 +19,8 @@ class Connections {
       this.parent = opt.parent
       this.color = opt.color
       this.opacity = opt.opacity
-      this.alpha = opt.alpha
+      this.alpha = 1.
+      this.scale = 1.
       this.type = opt.type
 
       this.line = {}
@@ -47,7 +49,22 @@ class Connections {
       this.setMaterial()
       this.setLineMesh()
 
-      if (this.type == 'users') this.addParticlesTrails()
+      if (this.type == 'users') {
+         // console.log(this.from, this.to, Score.getScore(this.from, this.to).norm, Score.getHighScore(this.from).norm);
+         if ( Score.getScore(this.from, this.to).norm == Score.getHighScore(this.from).norm ) { // Best Macth
+            this.alpha = .75
+            this.color = new Color('#0f0')
+         } else if ( Score.getScore(this.from, this.to).norm == Score.getWorstScore(this.from).norm ) { // Worst Match
+            this.alpha = .75
+            this.color = new Color('#f00')
+         } else {
+            this.alpha = 0.5
+            this.scale = 0.15
+            // this.color = new Color('#000')
+         }
+
+         this.addParticlesTrails()
+      }
 
       this.initialized = true
    }
@@ -60,7 +77,8 @@ class Connections {
          curve: this.curve,
          middle: this.middle,
          color: this.color,
-         alpha: this.alpha
+         alpha: this.alpha,
+         scale: this.scale
       })
 
       this.particlesTrails.push(particlesTrails)
@@ -154,11 +172,11 @@ class Connections {
       Scene.scene.add(mesh)
    }
 
-   update(time) {
+   update() {
       if (!this.initialized) return
 
       this.particlesTrails.forEach(particlesTrail => {
-         particlesTrail.update(time)
+         particlesTrail.update()
       })
    }
 }
