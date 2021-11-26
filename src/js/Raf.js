@@ -32,6 +32,7 @@ class RAF {
       this.dictonary = []
       this.last = performance.now()
       this.initTime = performance.now()
+      this.et = performance.now()
       this.init()
       this.isIOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform)
    }
@@ -72,6 +73,7 @@ class RAF {
    update() {
       requestAnimationFrame(this.update)
 
+      this.et = performance.now()
 
       this.frame++
       if (this.isIOS) {

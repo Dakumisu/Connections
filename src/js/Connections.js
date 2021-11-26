@@ -19,6 +19,10 @@ class Connections {
 
       this.initialized = false
 
+      
+   }
+
+   start() {
       setTimeout(() => {
          this.addConnectionToThemes()
          this.addConnectionBetweenUsers()
@@ -125,5 +129,5 @@ class Connections {
       })
    }
 }
-
-export default Connections
+const out = new Connections()
+export default out

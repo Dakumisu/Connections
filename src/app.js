@@ -14,6 +14,7 @@ import Device from '@js/Device'
 import Raf from '@js/Raf'
 import Datas from '@js/Datas'
 import Score from '@js/Score'
+import Views from '@js/Views'
 
 import DarkHole from '@js/DarkHole'
 import Themes from '@js/Themes'
@@ -22,15 +23,14 @@ import SphereParticles from '@js/SphereParticles'
 import Univers from '@js/Univers'
 import Users from '@js/Users'
 import Connections from '@js/Connections'
-// import User from '@js/User'
 
-const darkHole = new DarkHole()
-// const users = new Users()
-// const connections = new Connections()
+// DarkHole.start()
 
-// Themes.start()
-
-// const univers = new Univers()
+Users.start()
+Connections.start()
+Themes.start()
+Score.start()
+// Univers.start()
 
 document.addEventListener('keydown', e => {
     console.log(`${e.key} touch pressed`)
@@ -39,12 +39,15 @@ document.addEventListener('keydown', e => {
 Raf.suscribe('update', () => { update() })
 
 function update() {
-    Scene.render()
-    // PostProcessing.render()
-    darkHole.update()
-    // users.update(Raf.timeElapsed)
-    // connections.update()
-    // Themes.update()
-    // univers.update()
+    document.body.style.cursor = 'default'
+
+    updateExp()
+}
+
+function updateExp() {
+    PostProcessing.render()
+    Users.update()
+    Connections.update()
+    Themes.update()
     Control.controls.update()
 }

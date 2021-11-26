@@ -1,11 +1,14 @@
-import { Color, Group, Mesh, MeshBasicMaterial, SphereBufferGeometry, Vector2 } from 'three'
+import { Color, DoubleSide, Group, LinearFilter, Mesh, MeshBasicMaterial, RGBFormat, ShaderMaterial, SphereBufferGeometry, Vector2, VideoTexture } from 'three'
+import { gsap } from 'gsap'
 
 import Scene from '@js/Scene'
 import Mouse from '@js/Mouse'
 import { Store } from '@js/Store'
 
-// import vertex from '@glsl/sphereParticles/vertex.vert'
-// import fragment from '@glsl/sphereParticles/fragment.frag'
+import vertex from '@glsl/univers/vertex.vert'
+import fragment from '@glsl/univers/fragment.frag'
+
+import bouleNoire from '@static/video/laboulenoir.mp4'
 
 class Univers {
    constructor(opt) {
@@ -16,11 +19,14 @@ class Univers {
       this.target = new Vector2()
 
       this.initialized = false
-
+   }
+   
+   start() {
       this.init()
    }
 
    init() {
+      this.videoTexture = this.getVideo(bouleNoire)
       this.setGeometry()
       this.setMaterial()
       this.setMesh()
@@ -28,35 +34,37 @@ class Univers {
       this.initialized = true
    }
 
+   getVideo(src) {
+      const video = document.createElement('video')
+      video.src = src
+      video.autoplay = true
+      video.loop = true
+      
+      const videoTexture = new VideoTexture(video);
+      videoTexture.minFilter = LinearFilter;
+      videoTexture.magFilter = LinearFilter;
+      videoTexture.format = RGBFormat;
+
+      return videoTexture
+   }
+
    setGeometry() {
-      this.univers.geometry = new SphereBufferGeometry(10, 64, 32)
+      this.univers.geometry = new SphereBufferGeometry(25, 64, 32)
    }
 
    setMaterial() {
-      // this.univers.material = new ShaderMaterial({
-      //    vertexShader: vertex,
-      //    fragmentShader: fragment,
-      //    uniforms: {
-      //       uTime: { value : 0 },
-      //       uColor: { value: new Color(0xffffff) },
-      //       uAlpha: { value: 1 },
-      //       uRandomAxis: { value: this.randomAxis },
-      //       uResolution : { value : tVec2a.set(Store.sizes.width, Store.sizes.height) },
-      //       uPixelRatio: { value: window.devicePixelRatio },
-      //    },
-      //    side: DoubleSide,
-      //    transparent: true,
-
-      //    /* pour les particules */
-      //    depthTest: true,
-      //    depthWrite: false,
-      //    blending: AdditiveBlending
-      // })
-
-      this.univers.material = new MeshBasicMaterial({
-         color: new Color("#fff"),
-         transparent: true,
-         wireframe: true
+      this.univers.material = new ShaderMaterial({
+         vertexShader: vertex,
+         fragmentShader: fragment,
+         uniforms: {
+            uTime: { value : 0 },
+            uAlpha: { value : 1 },
+            uVideoTexture: { value: this.videoTexture },
+            uAspect : { value : new Vector2(Store.sizes.width, Store.sizes.height) },
+            uPixelRatio: { value: window.devicePixelRatio }
+         },
+         side: DoubleSide,
+         transparent: true
       })
    }
 
@@ -77,6 +85,12 @@ class Univers {
       Scene.scene.add(object)
    }
 
+   fadeOut() {
+      gsap.to(this.univers.mesh.material.uniforms.uAlpha, 3, { value: 0, ease: 'Power3.easeInOut', onComplete: () => {
+         this.univers.mesh.visible = false
+      } })
+   }
+
    update() {
       if (!this.initialized) return
 
@@ -87,4 +101,5 @@ class Univers {
       this.univers.group.rotation.x += (.02 * (this.target.y / 2 - this.univers.group.rotation.x));   }
 }
 
-export default Univers
+const out = new Univers()
+export default out

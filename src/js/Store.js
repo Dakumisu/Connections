@@ -154,5 +154,13 @@ export const Store = {
       goodMatch: 1.,
       badMatch: .5,
       default: 1.,
+   },
+   views: {
+      preloader: 'preloader',
+      home: 'home',
+      about: 'about',
+      exp: 'exp',
+      userInfos: 'userInfos',
+      themeInfos: 'themeInfos'
    }
 }

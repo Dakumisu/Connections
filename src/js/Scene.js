@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { gsap } from 'gsap'
 
 import { Store } from '@js/Store'
 import Raf from '@js/Raf'
@@ -16,7 +17,7 @@ class Scene {
    init() {
       this.scene = new THREE.Scene()
       this.camera = new THREE.PerspectiveCamera(75, Store.sizes.width / Store.sizes.height, 0.01, 1000)
-      this.camera.position.set(0, 0, 15);
+      this.camera.position.set(0, 0, 90);
       this.camera.lookAt(new Vector3())
 
       this.renderer = new THREE.WebGLRenderer({
@@ -46,6 +47,14 @@ class Scene {
          this.renderer.setSize(Store.sizes.width, Store.sizes.height)
          this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
      })
+   }
+
+   startExp() {
+      gsap.to(this.camera.position, 3, { z: 15, ease: 'Power3.easeInOut' })
+   }
+
+   backHome() {
+      gsap.to(this.camera.position, 3, { x: 0, y: 0, z: 90, ease: 'Power3.easeInOut' })
    }
 
    update() {

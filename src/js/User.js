@@ -1,5 +1,7 @@
 import { BoxBufferGeometry, Color, Mesh, MeshBasicMaterial, SphereBufferGeometry, Vector3 } from 'three'
 
+import Raycaster from '@js/Raycaster'
+import Mouse from '@js/Mouse'
 import Scene from '@js/Scene'
 import { Store } from '@js/Store'
 
@@ -41,6 +43,7 @@ class User {
       this.user.mesh = new Mesh(this.user.geometry, this.user.material)
       
       this.user.mesh.pseudo = this.datas.pseudo
+      this.user.mesh.name = this.datas.pseudo
       this.user.mesh.profile = this.datas.profile
 
       const color = this.user.mesh.profile == 'Dev' ? '#A7AA26' : '#26AA6B'
@@ -61,7 +64,6 @@ class User {
    update() {
       if (!this.initialized) return
 
-      // this.user.mesh.position.x = this.startPosition.x + (.5 - Math.sin(time *.001) * .5)
    }
 }
 

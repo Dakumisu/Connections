@@ -191,7 +191,7 @@ class ParticlesTrails {
    update() {
       if (!this.initialized) return
 
-      this.particles.mesh.material.uniforms.uTime.value = Raf.timeElapsed
+      this.particles.mesh.material.uniforms.uTime.value = Raf.et
    }
 }
 

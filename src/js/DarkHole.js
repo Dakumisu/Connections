@@ -1,4 +1,5 @@
 import { Color, DoubleSide, LinearFilter, Mesh, PlaneBufferGeometry, RGBFormat, ShaderMaterial, SphereBufferGeometry, Vector2, VideoTexture } from 'three'
+import { gsap } from 'gsap'
 
 import Scene from '@js/Scene'
 import { Store } from '@js/Store'
@@ -14,7 +15,9 @@ class DarkHole {
       this.darkHole = {}
 
       this.initialized = false
+   }
 
+   start() {
       this.init()
       this.resize()
    }
@@ -31,7 +34,7 @@ class DarkHole {
    }
 
    setGeometry() {
-      this.darkHole.geometry = new PlaneBufferGeometry(1, 1, 1, 1)
+      this.darkHole.geometry = new PlaneBufferGeometry(24, 24, 1, 1)
    }
 
    setMaterial() {
@@ -48,12 +51,7 @@ class DarkHole {
             uPixelRatio: { value: window.devicePixelRatio }
          },
          side: DoubleSide,
-         transparent: true,
-
-         /* pour les particules */
-         // depthTest: false,
-         // depthWrite: false,
-         // blending: THREE.AdditiveBlending
+         transparent: true
       })
 
    }
@@ -61,6 +59,7 @@ class DarkHole {
    setMesh() {
       this.darkHole.mesh = new Mesh(this.darkHole.geometry, this.darkHole.material)
       this.darkHole.mesh.frustumCulled = false // https://threejs.org/docs/#api/en/core/Object3D.frustumCulled
+      this.darkHole.mesh.position.z = 50
 
       this.add(this.darkHole.mesh)
    }
@@ -70,22 +69,28 @@ class DarkHole {
    }
 
    getVideo(src) {
-      // const promise = new Promise((resolve, reject) => {
-         const video = document.createElement('video')
-         video.src = src
-         video.autoplay = true
-         video.loop = true
-         
-         const videoTexture = new VideoTexture(video);
-         videoTexture.minFilter = LinearFilter;
-         videoTexture.magFilter = LinearFilter;
-         videoTexture.format = RGBFormat;
-
-         // resolve(videoTexture);
-      // });
+      const video = document.createElement('video')
+      video.src = src
+      video.autoplay = true
+      video.loop = true
+      
+      const videoTexture = new VideoTexture(video);
+      videoTexture.minFilter = LinearFilter;
+      videoTexture.magFilter = LinearFilter;
+      videoTexture.format = RGBFormat;
 
       return videoTexture
-      // return promise
+   }
+
+   fadeOut() {
+      gsap.to(this.darkHole.mesh.material.uniforms.uAlpha, 2, { value: 0, ease: 'Power3.easeOut', onComplete: () => {
+         this.darkHole.mesh.visible = false
+      } })
+   }
+
+   fadeIn() {
+      this.darkHole.mesh.visible = true
+      gsap.to(this.darkHole.mesh.material.uniforms.uAlpha, 2, { value: 1, ease: 'Power3.easeOut' })
    }
 
    resize() {
@@ -101,4 +106,5 @@ class DarkHole {
    }
 }
 
-export default DarkHole
+const out = new DarkHole()
+export default out

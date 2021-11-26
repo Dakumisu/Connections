@@ -17,15 +17,13 @@ class Themes {
 
       this.initialized = false
       this.parseInitialized = false
-
-      // this.init()
-      // this.start()
    }
 
    start() {
       this.setGeometry()
       this.setMaterial()
      this.loadModel()
+     this.event()
    }
 
    loadModel() {
@@ -69,12 +67,6 @@ class Themes {
    }
 
    addSphereParticles() {
-      // for (let i = 0; i < Store.list.themes.length; i++) {
-      //    const label
-      //    const pos = this.getPosition()
-      // }
-      // console.log(Store.list);
-
       for (const label in this.themes) {
          const pos = this.getPosition(label)
 
@@ -83,8 +75,6 @@ class Themes {
          sphereParticles.particles.mesh.position.copy(pos)
 
          this.sphereParticles.push(sphereParticles)
-
-         // console.log(pos);
       }
    }
 
@@ -152,19 +142,6 @@ class Themes {
       })
 
       return result
-      // for (const label in object) {
-      //    if (Object.hasOwnProperty.call(object, label)) {
-      //       const element = object[label];
-            
-      //    }
-      // }
-      // console.log(this.themes[name].themeChild.name, name2);
-      // if (this.themes[name].themeChild.name == name2) {
-      //    // console.log(this.themes[name].themeChild.mesh.position);
-      //    return this.themes[name].themeChild.child.mesh.position
-      // }
-
-      // return 0
    }
    
    setGeometry() {
@@ -188,6 +165,14 @@ class Themes {
       Scene.scene.add(object)
    }
 
+   event() {
+      window.addEventListener('click', () => {
+         if (this.intersects.length) {
+            console.log(this.intersects[0].object.name);
+         }
+      })
+   }
+
    update() {
       if (!this.initialized) return
 
@@ -197,10 +182,12 @@ class Themes {
 
       Raycaster.raycaster.setFromCamera(Mouse.mouseScene, Scene.camera)
 
-      const intersects = Raycaster.raycaster.intersectObjects(this.themesModel.children)
+      this.intersects = Raycaster.raycaster.intersectObjects(this.themesModel.children)
 
-      for (let i = 0; i < intersects.length; i ++) {
-         console.log('hover ' + intersects[ i ].object.id)
+      // document.body.style.cursor = 'default'
+      for (let i = 0; i < this.intersects.length; i ++) {
+         document.body.style.cursor = 'pointer'
+         // console.log('hover ' + this.intersects[ i ].object.id)
       }
    }
 }

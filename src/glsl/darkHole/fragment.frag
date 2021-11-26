@@ -16,9 +16,7 @@ void main() {
 
   vec4 video = texture2D(uVideoTexture, vUv);
   vec4 videoAlpha = texture2D(uVideoTextureAlpha, vUv);
-  video.a = smoothstep(0., 1., videoAlpha.r);
-  
-  gl_FragColor = vec4(color, uAlpha);
-  gl_FragColor = vec4(vUv, 0., uAlpha);
+  video.a = smoothstep(0., 1., videoAlpha.r) * uAlpha;
+
   gl_FragColor = video;
 }

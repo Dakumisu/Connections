@@ -16,7 +16,7 @@ varying float vRandomScale;
 varying vec2 vUv;
 varying vec3 vPos;
 
-const float maxDuration = 1000.;
+const float maxDuration = 2000.;
 
 void main() {
    vUv = uv;
@@ -40,11 +40,11 @@ void main() {
    // spherePos.y += noiseY * .01;
    // spherePos.z -= noiseZ * .01;
 
-   spherePos.x -= (sin(uTime * .001 + (aParams.x * 10.)) * .1) * (1. - loop) * (spherePos.x * aParams.x * 1.2) * (1. - abs(aParams.x * .06) * (noiseX * .1));
-   spherePos.y += (sin(uTime * .001 + aParams.x) * .1) * (1. - loop) * (spherePos.y * aParams.x * 1.8) * (1. - abs(aParams.x * .06) * (noiseY * .1)) * .2;
-   spherePos.z += (sin(uTime * .001 + (aParams.x * 5.)) * .1) * (1. - loop) * (spherePos.z * aParams.x * 1.8) * (1. - abs(aParams.x * .06) * (noiseZ * .1));
+   spherePos.x -= (sin(uTime * .0005 + (aParams.x * 10.)) * .1) * (1. - loop) * (spherePos.x * aParams.x * 1.2) * (1. - abs(aParams.x * .06) * (noiseX * .1));
+   spherePos.y += (sin(uTime * .0005 + aParams.x) * .1) * (1. - loop) * (spherePos.y * aParams.x * 1.8) * (1. - abs(aParams.x * .06) * (noiseY * .1)) * .2;
+   spherePos.z += (sin(uTime * .0005 + (aParams.x * 5.)) * .1) * (1. - loop) * (spherePos.z * aParams.x * 1.8) * (1. - abs(aParams.x * .06) * (noiseZ * .1));
 
-   spherePos.xyz = rotate(spherePos.xyz, vec3(1. + sin(uRandomAxis * uTime)), PI * (uTime * .0005));
+   spherePos.xyz = rotate(spherePos.xyz, vec3(1. + sin(uRandomAxis * uTime)), PI * (uTime * .0002));
 
    vec4 mv = modelViewMatrix * vec4(spherePos, 1.);
 
