@@ -1,4 +1,4 @@
-# WebGL Template
+# Connections. A Gobelins' Workshop on Dataviz
 
 Hi :)
 
@@ -14,6 +14,6 @@ npm install
 # Run the local server at localhost:8080
 npm run dev
 
-# Build for production in the build/ directory
+# Build for production in the dist/ directory
 npm run build
 ```
