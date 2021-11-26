@@ -18,15 +18,14 @@ class Connections {
       this.connections.users = []
 
       this.initialized = false
-
-      
    }
 
    start() {
       setTimeout(() => {
          this.addConnectionToThemes()
          this.addConnectionBetweenUsers()
-         // this.updateConnections()
+         Store.nodes.connections_count.innerHTML = this.connections.themes.length + this.connections.users.length
+
          this.initialized = true
       }, 2000);
    }
@@ -101,11 +100,16 @@ class Connections {
       }
    }
 
-   updateConnections() {
-      for (let i = 0; i < this.connections.themes.length; i++) {
-         // const tmpUserPos = Store.users[i].user.position
-         // this.connections.themes[i].line.mesh.geometry
-      }
+   getConnections(name) {
+      const connexionsCount = []
+      this.connections.themes.forEach(connection => {
+         if (connection.from == name) connexionsCount.push(connection)
+      })
+      this.connections.users.forEach(connection => {
+         if (connection.from == name) connexionsCount.push(connection)
+      })
+
+      return connexionsCount
    }
 
    addToGroup(object) {

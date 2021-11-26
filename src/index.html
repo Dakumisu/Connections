@@ -29,17 +29,20 @@
     <meta property="og:image" content="assets/img/icon/favicon.jpg" />
     <meta name="msapplication-TileImage" content="assets/img/icon/favicon.jpg">
     <meta name="msapplication-TileColor" content="#222222">
+
+    <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css" />
+    <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting-cells.css" />
 </head>
 
 <body>
     <div class="main-container" data-ref="main_container">
-        <div class="preloader hide" data-ref="preloader">
+        <div class="preloader" data-ref="preloader">
             <span>0%</span>
-            <div></div>
+            <div data-ref="preload_value"></div>
             <span>100%</span>
         </div>
         
-        <div class="hud" data-ref="hud">
+        <div class="hud" data-ref="3">
             <button data-ref="hud_button">
                 <span>about</span>
             </button>
@@ -47,10 +50,10 @@
     
         <div class="home about" data-ref="menu">
             <div class="content content--home" data-ref="home">
-                <div class="title">
+                <div class="title" data-splitting data-ref="home_title">
                     <h1>connections.</h1>
                 </div>
-                <div class="logo">
+                <div class="logo" data-ref="logo">
                     <div class="rondnoir"></div>
                     <svg viewBox="0 0 218 218" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g opacity="0.8" clip-path="url(#clip0_71_130)">
@@ -86,24 +89,24 @@
                         </defs>
                     </svg>
                 </div>
-                <div class="caption">
+                <div class="caption" data-ref="caption">
                     <p>An experience where designers and developers learn to know each other.</p>
                 </div>
             </div>
             <div class="content content--about hide" data-ref="about">
-                <div class="title">
+                <div class="title" data-splitting data-ref="about_title">
                     <h1>about.</h1>
                 </div>
-                <div class="text">
+                <div class="text" data-ref="about_text">
                     <p>A data visualization experience where designers and developers learn to know each other.</p>
                     <p>It shows similarities in taste between the BDDI classroom within a subject like music or sports, which is represented by connections.</p>
                     <br>
                     <p>The data was collected in the BDDI 3rd year class 2021 - 2022.</p>
                 </div>
-                <div class="credit">
+                <div class="credit" data-ref="about_credit">
                     <p>Made by <br><span>Alexandre Gattefossé & Hugo Soares</span></p>
                 </div>
-                <div class="end">
+                <div class="end" data-ref="about_end">
                     <p>(end)</p>
                 </div>
             </div>
@@ -127,6 +130,7 @@
             <div class="line"></div>
         </div>
         <div class="hud-left-bottom" data-ref="hub_left_bottom">
+            <p class="hide">coordinates : <span data-ref="coordinate">0</span></p>
             <p>users : <span data-ref="users_count">0</span></p>
             <p>connections : <span data-ref="connections_count">0</span></p>
         </div>
@@ -165,13 +169,42 @@
                 </defs>
             </svg>
         </div>
+        <div class="user-info hide" data-ref="user_info">
+            <h3>{ <span data-ref="user_pseudo">undefined</span> }</h3>
+            <p>Compatibility Score</p>
+            <div class="line_gap"></div>
+            <div class="scores">
+                <div class="goodMatch">
+                    <div class="user" data-ref="user_good_matching_score1">
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div class="user" data-ref="user_good_matching_score2">
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div class="user" data-ref="user_good_matching_score3">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="badMatch">
+                    <p>Your worst enemy</p>
+                    <div class="user" data-ref="user_worst_matching_score">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="line_gap line_gap-micro"></div>
+        </div>
     </div>
     
     
     <div class="experience-ui" data-ref="exp_ui">
         <div class="localisation" data-ref="localisation">
-            <span class="place">plateau</span>
-            <span class="theme">( theme : nowhere )</span>
+            <p class="place" data-ref="local_place">plateau</p>
+            <p class="theme">theme : <span data-ref="local_theme">nowhere</span></p>
         </div>
     </div>
 

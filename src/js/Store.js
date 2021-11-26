@@ -162,5 +162,6 @@ export const Store = {
       exp: 'exp',
       userInfos: 'userInfos',
       themeInfos: 'themeInfos'
-   }
+   },
+   nodes: null
 }

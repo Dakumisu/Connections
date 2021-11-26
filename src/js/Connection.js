@@ -50,17 +50,14 @@ class Connections {
       this.setLineMesh()
 
       if (this.type == 'users') {
-         // console.log(this.from, this.to, Score.getScore(this.from, this.to).norm, Score.getHighScore(this.from).norm);
          if ( Score.getScore(this.from, this.to).pourcent == Score.getHighScore(this.from).pourcent ) { // Best Macth
-            // console.log(this.from, 'friend', this.to, Score.getScore(this.from, this.to).pourcent);
             this.alpha = Store.alpha.goodMatch
             this.color = new Color(Store.colors.goodMatch)
          } else if ( Score.getScore(this.from, this.to).pourcent == Score.getWorstScore(this.from).pourcent ) { // Worst Match
-            // console.log(this.from, 'hate', this.to, Score.getScore(this.from, this.to).pourcent);
             this.alpha = Store.alpha.badMatch
             this.color = new Color(Store.colors.badMatch)
          } else {
-            this.alpha = Store.alpha.badMatch
+            this.alpha = .2
             this.scale = 0.15 // SCALE
             this.color = new Color(Store.colors.default)
          }

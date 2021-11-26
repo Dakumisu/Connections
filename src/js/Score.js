@@ -64,7 +64,7 @@ class Score {
 
       // this.getCommonalities('Daku', 'Arles')
       // this.getScore('Daku', 'Arles')
-      console.log(this.getHighScore('Amb').scores);
+      // console.log(this.getHighScore('Amb').scores);
       // this.getWorstScore('Daku')
 
       this.initialized = true
@@ -86,29 +86,47 @@ class Score {
       const highScore = {}
       highScore.score = 0
       highScore.scores = []
+      const top3 = []
 
       for (const user in this.score[name1]) {
+         highScore.scores[this.score[name1][user].name] = this.score[name1][user].score
          let test1 = this.getPourcent(highScore.score, this.getMaxScore(name1))
          let test2 = this.getPourcent(this.score[name1][user].score, this.getMaxScore(name1))
          // console.log(test1, test2);
          if ( test1 < test2 ) {
             highScore.score = this.score[name1][user].score
             highScore.name = this.score[name1][user].name
-         } 
-      }
-
-      for (const user in this.score[name1]) {
-         if (highScore.score == this.score[name1][user].score) {
-            highScore.scores.push(this.score[name1][user])
          }
       }
+
+      
+      // for (const score in highScore.scores) {
+         
+      // }
+         
+         
+      // for (let i = 0; i < 3; i++) {
+            //    if (highScore.scores[i]) top3.push(highScore.scores[i])
+      // }
+
+      // for (let i = 0; i < top3.length; i++) {
+      //    top3[i] = this.getPourcent(top3[i], this.getMaxScore(name1))
+      // }
+
+      // for (const user in this.score[name1]) {
+      //    if (highScore.score == this.score[name1][user].score) {
+      //       highScore.scores.push(this.score[name1][user])
+      //    }
+      // }
+
+      // console.log(top3);
 
       highScore.pourcent = this.getPourcent(highScore.score, this.getMaxScore(name1))
       highScore.norm = this.getNorm(highScore.pourcent)
 
       return highScore;
    }
-
+   
    getWorstScore(name1) {
       const worstScore = {}
       worstScore.score = 100

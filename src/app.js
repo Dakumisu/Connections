@@ -1,7 +1,8 @@
 import './main.scss'
 
 import { TweenLite, TweenMax, gsap } from 'gsap' // https://greensock.com/docs/
-import howlerjs from 'howler' // https://github.com/goldfire/howler.js#documentation
+import Splitting from "splitting";
+Splitting();
 
 import Scene from '@js/Scene'
 import PostProcessing from '@js/PostProcessing' // Création de la scène + renderer + camera
@@ -15,6 +16,8 @@ import Raf from '@js/Raf'
 import Datas from '@js/Datas'
 import Score from '@js/Score'
 import Views from '@js/Views'
+import Preloader from '@js/Preloader'
+import SoundController from '@js/SoundController'
 
 import DarkHole from '@js/DarkHole'
 import Themes from '@js/Themes'

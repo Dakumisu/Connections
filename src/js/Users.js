@@ -2,9 +2,10 @@ import { BoxBufferGeometry, Color, Group, MathUtils, Mesh, MeshBasicMaterial, Sp
 
 import Raycaster from '@js/Raycaster'
 import Mouse from '@js/Mouse'
-import Scene from '@js/Scene'
 import User from '@js/User'
 import Datas from '@js/Datas'
+import Views from '@js/Views'
+import Scene from '@js/Scene'
 import { Store } from '@js/Store'
 
 class Users {
@@ -30,7 +31,7 @@ class Users {
 
    init() {
       this.addUser()
-   
+
       this.initialized = true
    }
 
@@ -75,6 +76,8 @@ class Users {
 
       Store.users = this.users
 
+      Store.nodes.users_count.innerHTML = Object.keys(this.users).length
+
       // this.add(this.groups.dev)
       // this.add(this.groups.designer)
 
@@ -94,8 +97,10 @@ class Users {
 
    event() {
       window.addEventListener('click', () => {
-         if (this.intersects.length) {
-            console.log(this.intersects[0].object.name);
+         if (Views.currentView != 'userInfos') {
+            if (this.intersects.length) {
+               Views.goToUserInfo(this.intersects[0].object.name)
+            }
          }
       })
    }
