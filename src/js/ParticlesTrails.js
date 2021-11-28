@@ -121,7 +121,7 @@ class ParticlesTrails {
          this.params[i + 2] = 0
          
          this.paramsProgress[i + 0] = .5 + Math.cos(Math.PI + (i / particlesCount) * (Math.PI * 2)) * .5 // progress
-         this.paramsProgress[i + 1] = (i * 10) / particlesCount
+         this.paramsProgress[i + 1] = (i * 5) / particlesCount
          this.paramsProgress[i + 2] = 0
 
          j++

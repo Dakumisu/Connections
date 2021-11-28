@@ -10,7 +10,7 @@ import { map } from '@utils/maths'
 const tVec3a = new Vector3()
 const tVec3b = new Vector3()
 const tVec3c = new Vector3()
-class Connections {
+class Connection {
    constructor(opt) {
       this.start = opt.start
       this.end = opt.end
@@ -50,15 +50,17 @@ class Connections {
       this.setLineMesh()
 
       if (this.type == 'users') {
-         if ( Score.getScore(this.from, this.to).pourcent == Score.getHighScore(this.from).pourcent ) { // Best Macth
+         if ( Score.getScore(this.from, this.to).pourcent == Store.users[this.from].highScore ) { // Best Macth
+            // console.log(this.from, this.to, Score.getScore(this.from, this.to).pourcent);
             this.alpha = Store.alpha.goodMatch
             this.color = new Color(Store.colors.goodMatch)
-         } else if ( Score.getScore(this.from, this.to).pourcent == Score.getWorstScore(this.from).pourcent ) { // Worst Match
+         } else if ( Score.getScore(this.from, this.to).pourcent == Store.users[this.from].worstScore ) { // Worst Match
+            // console.log(this.from, this.to, Score.getScore(this.from, this.to).pourcent);
             this.alpha = Store.alpha.badMatch
             this.color = new Color(Store.colors.badMatch)
          } else {
             this.alpha = .2
-            this.scale = 0.15 // SCALE
+            this.scale = 0.15
             this.color = new Color(Store.colors.default)
          }
 
@@ -85,13 +87,9 @@ class Connections {
 
    setGeometry() {
       this.subdivisions = 50
-      
-      // this.points.push(this.start)
-      // this.points.push(this.end)
 
       this.line.geometry = new BufferGeometry()
 
-      // const points = []
       this.curve = new QuadraticBezierCurve3()
 
       const middleX = (this.start.x + this.end.x) / 2
@@ -137,11 +135,6 @@ class Connections {
       strength.x *= x
       strength.y *= y
       strength.z *= z
-      
-      // console.log(strength.x, strength.x, strength.z);
-      // if (x < this.limit.x) strength.x = .1
-      // if (y < this.limit.y) strength.y = .1
-      // if (z < this.limit.z) strength.z = .1
 
       return { strength }
    }
@@ -180,4 +173,4 @@ class Connections {
    }
 }
 
-export default Connections
+export default Connection

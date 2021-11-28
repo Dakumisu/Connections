@@ -273,7 +273,7 @@ p {
 
 			.text {
 				height: 25%;
-				width: 35vw;
+				width: 50vw;
 				min-width: 850px;
 				display: flex;
 				flex-direction: column;
@@ -458,16 +458,15 @@ p {
 	}
 }
 
-.bg-noir {
-	width: 100vw;
-	height: 100vh;
-	background-color: #000;
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 5;
-}
-
+// .bg-noir {
+// 	width: 100vw;
+// 	height: 100vh;
+// 	background-color: #000;
+// 	position: fixed;
+// 	top: 0;
+// 	left: 0;
+// 	z-index: 5;
+// }
 
 .exp-container {
 	opacity: 0;
@@ -513,9 +512,8 @@ p {
 				letter-spacing: -3px;
 				mix-blend-mode: color-burn;
 				top: 0;
-				left: -5ch;
-				// margin-right: 50px;
-				transform: translate(-50%, -65%);
+				left: -1rem;
+				transform: translate(-100%, -65%);
 			}
 		}
 	}
@@ -523,7 +521,7 @@ p {
 	.hud-left-bottom {
 		pointer-events: none;
 		position: absolute;
-		width: 400px;
+		width: auto;
 		margin: auto;
 		height: auto;
 		// margin-top: 3.5%;
@@ -539,7 +537,7 @@ p {
 			margin: 0;
 			padding: 0 10px;
 			font-size: 1.5rem;
-			margin: 1rem 0;
+			margin: .25rem 0;
 			background-color: #fff;
 			transform: scaleY(.95);
 		}
@@ -578,7 +576,8 @@ p {
 
 	.user-info {
 		position: absolute;
-		right: 3.5%;
+		margin-top: 3.5%;
+		right: 5%;
 		z-index: 4;
 
 		display: flex;
@@ -588,8 +587,8 @@ p {
 
 		font-size: 1.5rem;
 
-		width: 400px;
-		height: 300px;
+		width: 35rem;
+		height: auto;
 
 		h3 {
 			font-size: 3rem;
@@ -619,6 +618,13 @@ p {
 			width: 100%;
 			margin: auto;
 			
+			p {
+				text-align: center;
+				width: 100%;
+				margin: auto auto auto 1rem;
+				font-size: 1.5rem;
+			}
+			
 			.user {
 				width: 80%;
 				height: 2rem;
@@ -635,13 +641,6 @@ p {
 
 		.badMatch {
 			color: $red;
-
-			p {
-				text-align: center;
-				width: 100%;
-				margin: auto;
-				font-size: 1.5rem;
-			}
 		}
 
 		.line_gap {

@@ -152,7 +152,7 @@ export const Store = {
    },
    alpha: {
       goodMatch: 1.,
-      badMatch: .5,
+      badMatch: .85,
       default: 1.,
    },
    views: {

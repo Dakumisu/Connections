@@ -71,7 +71,6 @@ class Connections {
          users.push(Store.users[user])  
       }
 
-      let k = 1
       for (let i = 0; i < users.length; i++) {         
          for (let j = 0; j < users.length; j++) {
             const pseudo1 = users[i].datas.pseudo
@@ -95,8 +94,6 @@ class Connections {
                this.connections.users.push(connection)
             }
          }
-
-         k++
       }
    }
 

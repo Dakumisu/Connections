@@ -33,11 +33,12 @@ Users.start()
 Connections.start()
 Themes.start()
 Score.start()
-// Univers.start()
 
 document.addEventListener('keydown', e => {
     console.log(`${e.key} touch pressed`)
 })
+
+Views.startExp()
 
 Raf.suscribe('update', () => { update() })
 

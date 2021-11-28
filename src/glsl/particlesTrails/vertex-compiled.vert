@@ -109,8 +109,8 @@ void main() {
    vLoop = loop;
 
    // trailPos.x += uDir * ((1. - loop) * (((uTime * .01) - 1.))) * (aParamsProgress.x * (uStrength.x * .02));
-   trailPos.y += ((1. - (sin(uTime * .0015 + (aParams.x * 5.)) - 1.)) * .1) * (aParamsProgress.x * (uStrength.y * .1));
-   trailPos.z += ((1. - (cos(uTime * .0015 + (aParams.x * 2.)) - 1.)) * .1) * (aParamsProgress.x * (uStrength.z * .1));
+   // trailPos.y += ((1. - (sin(uTime * .0015 + (aParams.x * 5.)) - 1.)) * .1) * (aParamsProgress.x * (uStrength.y * .1));
+   // trailPos.z += ((1. - (cos(uTime * .0015 + (aParams.x * 2.)) - 1.)) * .1) * (aParamsProgress.x * (uStrength.z * .1));
 
 // * smoothstep(1., .75, aParamsProgress.x) * smoothstep(0., .25, aParamsProgress.x) * uStrength.x
 // * smoothstep(1., .75, aParamsProgress.x) * smoothstep(0., .25, aParamsProgress.x) * uStrength.y

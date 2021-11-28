@@ -59,10 +59,20 @@ class Score {
             }
          }
       }
-
+      
       this.score = score
 
-      // this.getCommonalities('Daku', 'Arles')
+      // console.log(this.score);
+      
+      for (const user in this.score) {
+         // console.log(user);
+         Store.users[user].highScore = this.getHighScore(user).pourcent
+         Store.users[user].worstScore = this.getWorstScore(user).pourcent
+         // console.log(Store.users[user]);
+      }
+
+
+      console.log(this.score);
       // this.getScore('Daku', 'Arles')
       // console.log(this.getHighScore('Amb').scores);
       // this.getWorstScore('Daku')
@@ -87,65 +97,60 @@ class Score {
       highScore.score = 0
       highScore.scores = []
       const top3 = []
+      let diff = 0
 
       for (const user in this.score[name1]) {
-         highScore.scores[this.score[name1][user].name] = this.score[name1][user].score
-         let test1 = this.getPourcent(highScore.score, this.getMaxScore(name1))
-         let test2 = this.getPourcent(this.score[name1][user].score, this.getMaxScore(name1))
-         // console.log(test1, test2);
-         if ( test1 < test2 ) {
-            highScore.score = this.score[name1][user].score
+         let testDiff = this.getDiff(name1, this.score[name1][user].name)
+// console.log(name1, this.score[name1][user].name, this.score[name1][user].score + this.score[name1][user].score, testDiff, this.score[name1][user].score + this.score[name1][user].score - testDiff);
+         if ( highScore.score < this.score[name1][user].score - testDiff ) {
+            highScore.score = this.score[name1][user].score - testDiff
             highScore.name = this.score[name1][user].name
          }
       }
 
-      
-      // for (const score in highScore.scores) {
-         
-      // }
-         
-         
-      // for (let i = 0; i < 3; i++) {
-            //    if (highScore.scores[i]) top3.push(highScore.scores[i])
-      // }
-
-      // for (let i = 0; i < top3.length; i++) {
-      //    top3[i] = this.getPourcent(top3[i], this.getMaxScore(name1))
-      // }
-
-      // for (const user in this.score[name1]) {
-      //    if (highScore.score == this.score[name1][user].score) {
-      //       highScore.scores.push(this.score[name1][user])
-      //    }
-      // }
-
-      // console.log(top3);
+      for (const user in this.score[name1]) {
+         if ( highScore.score == this.score[name1][user].score ) highScore.scores[this.score[name1][user].name] = this.score[name1][user].score
+      }
 
       highScore.pourcent = this.getPourcent(highScore.score, this.getMaxScore(name1))
+      // console.log(name1, highScore.pourcent, highScore.name)
       highScore.norm = this.getNorm(highScore.pourcent)
+
+      // Store.users[name1].highScore = highScore.pourcent
 
       return highScore;
    }
    
    getWorstScore(name1) {
       const worstScore = {}
-      worstScore.score = 100
+      worstScore.score = Infinity
+      let diff = 0
 
       for (const user in this.score[name1]) {
-         if (worstScore.score > this.score[name1][user].score) {
-            worstScore.score = this.score[name1][user].score
+         let testDiff = this.getDiff(name1, this.score[name1][user].name)
+
+         if (worstScore.score > this.score[name1][user].score - testDiff) {
+            worstScore.score = this.score[name1][user].score - testDiff
             worstScore.name = this.score[name1][user].name
+
+            // console.log(name1, worstScore.score, this.score[name1][user].name)
+            diff = this.getDiff(name1, this.score[name1][user].name)
          }
       }
 
       worstScore.pourcent = this.getPourcent(worstScore.score, this.getMaxScore(name1))
+      // console.log(name1, worstScore.pourcent, worstScore.name)
       worstScore.norm = this.getNorm(worstScore.pourcent)
+
+      // Store.users[name1].worstScore = worstScore.pourcent
 
       return worstScore
    }
 
    getScore(name1, name2) {
-      const tmpScore = this.score[name1][name2].score
+      let testDiff = this.getDiff(name1, name2)
+
+      const tmpScore = this.score[name1][name2].score - testDiff
       const maxScore = this.getMaxScore(name1)
 
       const userScore = {}
@@ -173,6 +178,10 @@ class Score {
       }
 
       return count.length
+   }
+
+   getDiff(name1, name2) {
+      return this.getMaxScore(name1) - this.getCommonalities(name1, name2).length
    }
 
    splitData(data) {

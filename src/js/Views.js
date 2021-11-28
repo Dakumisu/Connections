@@ -127,13 +127,14 @@ class Views {
 
    goToUserInfo(name) {
       this.changeView('userInfos')
+      gsap.fromTo(this.nodes.user_info, 2, { opacity: 0, ease: 'Power3.easeInOut' }, { opacity: 1, ease: 'Power3.easeInOut' })
       this.nodes.hub_left_bottom.children[0].classList.remove('hide')
       this.nodes.user_info.classList.remove('hide')
-      gsap.fromTo(this.nodes.user_info, 2, { opacity: 0, ease: 'Power3.easeInOut' }, { opacity: 1, ease: 'Power3.easeInOut' })
-      this.nodes.hub_left_bottom.children[1].classList.add('hide')
-      this.nodes.canvas.children[0].classList.add('clickCanvas')
       this.nodes.connections_count.innerHTML = Connections.getConnections(name).length
       this.nodes.coordinate.innerHTML =  `[${Store.users[name].position.x.toFixed(2)}, ${Store.users[name].position.y.toFixed(2)}, ${Store.users[name].position.z.toFixed(2)}]`
+      this.nodes.hub_left_bottom.children[1].classList.add('hide')
+
+      this.nodes.canvas.children[0].classList.add('clickCanvas')
       
       this.nodes.user_pseudo.innerHTML = Store.users[name].datas.pseudo
 
@@ -155,15 +156,16 @@ class Views {
    backExp() {
       gsap.to(this.nodes.user_info, 1, { opacity: 0, ease: 'Power3.easeInOut', onComplete: () => {
          this.changeView('exp')
-         this.nodes.hub_left_bottom.children[0].classList.add('hide')
-         this.nodes.user_info.classList.add('hide')
-         this.nodes.hub_left_bottom.children[1].classList.remove('hide')
-         this.nodes.local_place.innerHTML = 'plateau'
-         this.nodes.local_theme.innerHTML = 'overall'
       }})
       
-      this.nodes.canvas.children[0].classList.remove('clickCanvas')
+      this.nodes.hub_left_bottom.children[0].classList.add('hide')
+      this.nodes.user_info.classList.add('hide')
+      this.nodes.hub_left_bottom.children[1].classList.remove('hide')
+      this.nodes.local_place.innerHTML = 'plateau'
+      this.nodes.local_theme.innerHTML = 'overall'
       this.nodes.connections_count.innerHTML = Connections.connections.themes.length + Connections.connections.users.length
+      
+      this.nodes.canvas.children[0].classList.remove('clickCanvas')
 
       gsap.to(this.nodes.canvas.children[0], 1.5, { scale: 1, xPercent: 0, yPercent: 0, ease: 'Power3.easeInOut' })
    }

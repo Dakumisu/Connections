@@ -21,7 +21,9 @@ void main() {
   vec2 res = gl_FragCoord.xy / uResolution.xy;
   res /= uPixelRatio;
 
-  float strength = .5 * (vRandomScale *.5) / distance(uv, vec2(.5));
+  float progress = abs(cos(PI + (vTrailProgress + (-uTime * .00025)) * (PI * 2.)));
+
+  float strength = (progress) * (vRandomScale *.25) / distance(uv, vec2(.5));
   
   vec3 particle = vec3(uColor);
 
@@ -30,8 +32,7 @@ void main() {
 
   float alpha = smoothstep(1., .75, vLoop) * smoothstep(.0, .25, vLoop) * (vPos.x +  vPos.y +  vPos.z + uAlpha);
   alpha *= vRandomScale;
-  // alpha *= vTrailProgress * (.5 - sin(uTime * .005) * .5);
-  alpha *= .5 + cos(PI + (vTrailProgress + (uTime * .00075)) * (PI * 2.)) * .5;
+  alpha *= progress;
   
 
   gl_FragColor = vec4(particle, alpha);
