@@ -28,16 +28,14 @@ import Connections from '@js/Connections'
 Splitting();
 
 if (!Store.mobile) {
-    Users.start()
-    Connections.start()
-    Themes.start()
-    Score.start()
+    Users.start().then( () => {
+        Themes.start().then( () => {
+            Score.start()
+            Connections.start()
     
-    document.addEventListener('keydown', e => {
-        console.log(`${e.key} touch pressed`)
+            Raf.suscribe('update', () => { update() })
+        })
     })
-    
-    Raf.suscribe('update', () => { update() })
 }
 
 

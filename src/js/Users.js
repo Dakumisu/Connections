@@ -24,67 +24,68 @@ class Users {
       // this.init()
    }
    
-   start() {
-      this.init()
-      this.event()
+   async start() {
+      return new Promise( resolve => {
+         this.addUser().then( () => {
+            this.event()
+
+            this.initialized = true
+            resolve()
+         })
+      })
    }
 
-   init() {
-      this.addUser()
-
-      this.initialized = true
-   }
-
-   addUser() {
-      const sphereGeometry = new SphereBufferGeometry(6, 32, 32)
-      const sphereGeometryPos = sphereGeometry.attributes.position.array
-      const usersPos = []
-      const checkAvailablePos = []
-
-      let i = 0
-      let j = 0
-
-      for (const dataUser of Datas.datas) {
-         let random = 0
-
-         random = Math.floor(MathUtils.randFloat(0, sphereGeometryPos.length))
-         random += random % 3
-
-         do {
+   async addUser() {
+      return new Promise( resolve => {
+         const sphereGeometry = new SphereBufferGeometry(6, 32, 32)
+         const sphereGeometryPos = sphereGeometry.attributes.position.array
+         const usersPos = []
+         const checkAvailablePos = []
+   
+         let i = 0
+         let j = 0
+   
+         for (const dataUser of Datas.datas) {
+            let random = 0
+   
             random = Math.floor(MathUtils.randFloat(0, sphereGeometryPos.length))
             random += random % 3
-         } while (checkAvailablePos.includes(random))
+   
+            do {
+               random = Math.floor(MathUtils.randFloat(0, sphereGeometryPos.length))
+               random += random % 3
+            } while (checkAvailablePos.includes(random))
+   
+            checkAvailablePos.push(random)
+   
+            usersPos.push(new Vector3(sphereGeometryPos[random], sphereGeometryPos[random + 1], sphereGeometryPos[random + 2]))
+   
+            const user = new User({
+               datas: dataUser,
+               position: usersPos[j]
+            })
+            
+            this.users[dataUser.pseudo] = user
+            
+            this.raycastedMeshes.push(user.user.mesh)
+   
+            this.addToGroup(user.user.mesh)
+   
+            i += 3
+            j++
+         }
+   
+         Store.users = this.users
+   
+         Store.nodes.users_count.innerHTML = Object.keys(this.users).length
+   
+         this.groups.global.add(this.groups.dev)
+         this.groups.global.add(this.groups.designer)
+   
+         this.add(this.groups.global)
 
-         checkAvailablePos.push(random)
-
-         usersPos.push(new Vector3(sphereGeometryPos[random], sphereGeometryPos[random + 1], sphereGeometryPos[random + 2]))
-
-         const user = new User({
-            datas: dataUser,
-            position: usersPos[j]
-         })
-         
-         this.users[dataUser.pseudo] = user
-         
-         this.raycastedMeshes.push(user.user.mesh)
-
-         this.addToGroup(user.user.mesh)
-
-         i += 3
-         j++
-      }
-
-      Store.users = this.users
-
-      Store.nodes.users_count.innerHTML = Object.keys(this.users).length
-
-      // this.add(this.groups.dev)
-      // this.add(this.groups.designer)
-
-      this.groups.global.add(this.groups.dev)
-      this.groups.global.add(this.groups.designer)
-
-      this.add(this.groups.global)
+         resolve()
+      })
    }
 
    addToGroup(object) {

@@ -11,8 +11,6 @@ const tVec3b = new Vector3()
 
 class Connections {
    constructor(opt) {
-      this.themes = Themes
-
       this.connections = {}
       this.connections.themes = []
       this.connections.users = []
@@ -21,13 +19,11 @@ class Connections {
    }
 
    start() {
-      setTimeout(() => {
-         this.addConnectionToThemes()
-         this.addConnectionBetweenUsers()
-         Store.nodes.connections_count.innerHTML = this.connections.themes.length + this.connections.users.length
+      this.addConnectionToThemes()
+      this.addConnectionBetweenUsers()
+      Store.nodes.connections_count.innerHTML = this.connections.themes.length + this.connections.users.length
 
-         this.initialized = true
-      }, 4000);
+      this.initialized = true
    }
 
    addConnectionToThemes() {
@@ -42,7 +38,7 @@ class Connections {
                   // console.log(`%c${e}`, "color:blue");
                   
                   const tmpUserPos = Store.users[user].user.position
-                  const tmpThemePos = this.themes.getChildPosition(label, e)
+                  const tmpThemePos = Themes.getChildPosition(label, e)
                   const themeChildTarget = e
                   const themeTarget = label
    

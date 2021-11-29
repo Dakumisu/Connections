@@ -20,26 +20,35 @@ class Themes {
       this.parseInitialized = false
    }
 
-   start() {
+   async start() {
       this.setGeometry()
       this.setMaterial()
-      this.loadModel()
-      this.event()
+      return new Promise( resolve => {
+         this.loadModel().then( () => {
+            this.event()
+
+            resolve()
+         })
+      })
    }
 
-   loadModel() {
-      loadGLTF(theme).then( value => {
-         this.themesModel = value.scenes[0]
+   async loadModel() {
+      return new Promise( resolve => {
+         loadGLTF(theme).then( value => {
+            this.themesModel = value.scenes[0]
+   
+            this.setThemeName()
+            this.parseTheme().then( () => {
+   
+               this.addSphereParticles()
+               this.addTheme()
+               this.addThemeChild()
+               this.add(this.themesModel)
+               
+               this.initialized = true
 
-         this.setThemeName()
-         this.parseTheme().then(() => {
-
-            this.addSphereParticles()
-            this.addTheme()
-            this.addThemeChild()
-            this.add(this.themesModel)
-            
-            this.initialized = true
+               resolve()
+            })
          })
       })
    }
@@ -117,7 +126,7 @@ class Themes {
    }
    
    async parseTheme() {
-      const promise = new Promise(resolve => {
+      return new Promise( resolve => {
          for (let i = 0; i < this.themesModel.children.length; i++) {
             this.themes[this.themesModel.children[i].name] = {}
             this.themes[this.themesModel.children[i].name].theme = {}
@@ -125,7 +134,7 @@ class Themes {
             this.themes[this.themesModel.children[i].name].theme.mesh = this.themesModel.children[i]
          }
 
-         resolve('done')
+         resolve()
       })
    }
 

@@ -10,12 +10,12 @@ class SoundController {
       
       this.btnClickSound = new Howl({
          src: [btnSoundClick],
-         volume: 0.1,
+         volume: 0.2,
       });
 
       this.ambientSound = new Howl({
          src: [atmosSound],
-         volume: 0.5,
+         volume: 0.9,
          loop: true
       });
 
