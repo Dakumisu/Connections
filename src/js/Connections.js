@@ -27,7 +27,7 @@ class Connections {
          Store.nodes.connections_count.innerHTML = this.connections.themes.length + this.connections.users.length
 
          this.initialized = true
-      }, 2000);
+      }, 4000);
    }
 
    addConnectionToThemes() {
@@ -36,7 +36,7 @@ class Connections {
          const pseudo = userData.pseudo
          // console.log(`%c${userData.pseudo}`, "color:red");
          for (const label in userData) {
-            if (label != 'profile' && label != 'pseudo' && userData[label] != 'NOTHING') {
+            if (label != 'profile' && label != 'pseudo' && userData[label] != 'Nothing') {
                // console.log(`%c${label}`, "color:green");
                this.splitData(userData[label]).forEach(e => { // ça renvoie le nom des sous categories
                   // console.log(`%c${e}`, "color:blue");
@@ -97,16 +97,25 @@ class Connections {
       }
    }
 
-   getConnections(name) {
-      const connexionsCount = []
+   getUserConnections(name) {
+      const connexions = []
       this.connections.themes.forEach(connection => {
-         if (connection.from == name) connexionsCount.push(connection)
+         if (connection.from == name) connexions.push(connection)
       })
       this.connections.users.forEach(connection => {
-         if (connection.from == name) connexionsCount.push(connection)
+         if (connection.from == name) connexions.push(connection)
+      })
+      
+      return connexions
+   }
+   
+   getThemeConnections(theme) {
+      const connexions = []
+      this.connections.themes.forEach(connection => {
+         if (connection.parent == theme) connexions.push(connection)
       })
 
-      return connexionsCount
+      return connexions
    }
 
    addToGroup(object) {

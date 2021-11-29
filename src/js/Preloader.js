@@ -35,6 +35,7 @@ class Preloader {
             gsap.fromTo(Store.nodes.logo, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: 1, ease: "Power3.easeInOut", delay: .5 })
             gsap.fromTo(Store.nodes.caption, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: .75, ease: "Power3.easeInOut", delay: .75 })
             gsap.fromTo(Store.nodes.start, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: .75, ease: "Power3.easeInOut", delay: 1 })
+            gsap.fromTo(Store.nodes.mobile_view, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: .75, ease: "Power3.easeInOut", delay: 1.15 })
             gsap.fromTo(Store.nodes.localisation, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: .75, ease: "Power3.easeInOut", delay: 1.25 })
             
             Store.nodes.preloader.remove()

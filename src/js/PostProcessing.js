@@ -1,10 +1,8 @@
 import { Vector2 } from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass.js';
-import { RGBShiftShader } from 'three/examples/jsm/shaders/RGBShiftShader.js';
 
 import Scene from '@js/Scene'
 import { Store } from '@js/Store'
@@ -23,17 +21,16 @@ class PostProcessing {
 
       this.bloomPass = new UnrealBloomPass( tVec2a.set(Store.sizes.width, Store.sizes.height ));
       this.bloomPass.threshold = 0;
-      this.bloomPass.strength = .76;
+      this.bloomPass.strength = .75;
       this.bloomPass.radius = 0;
 
       this.afterimagePass = new AfterimagePass();
-      this.afterimagePass.uniforms.damp.value = .75
+      this.afterimagePass.uniforms.damp.value = .65
 
       
       this.composer = new EffectComposer( Scene.renderer );
       this.composer.addPass( this.renderScene );
 		this.composer.addPass( this.afterimagePass );
-      // this.composer.addPass( this.rgbShift );
       this.composer.addPass( this.bloomPass );
    }
 

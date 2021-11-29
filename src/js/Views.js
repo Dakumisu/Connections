@@ -126,16 +126,17 @@ class Views {
 
    goToUserInfo(name) {
       this.changeView('userInfos')
+
       gsap.fromTo(this.nodes.user_info, 2, { opacity: 0, ease: 'Power3.easeInOut' }, { opacity: 1, ease: 'Power3.easeInOut' })
       this.nodes.hub_left_bottom.children[0].classList.remove('hide')
       this.nodes.user_info.classList.remove('hide')
-      this.nodes.connections_count.innerHTML = Connections.getConnections(name).length
+      this.nodes.connections_count.innerHTML = Connections.getUserConnections(name).length
       this.nodes.coordinate.innerHTML =  `[${Store.users[name].position.x.toFixed(2)}, ${Store.users[name].position.y.toFixed(2)}, ${Store.users[name].position.z.toFixed(2)}]`
       this.nodes.hub_left_bottom.children[1].classList.add('hide')
 
       this.nodes.canvas.children[0].classList.add('clickCanvas')
       
-      this.nodes.user_pseudo.innerHTML = Store.users[name].datas.pseudo
+      this.nodes.user_pseudo.innerHTML = name
 
       /* Clean up match.es' display */
       let tmpCount = this.nodes.user_good_matching_score.children.length
@@ -190,17 +191,84 @@ class Views {
 
       this.nodes.user_worst_matching_score.append(worstScoreDocFragment)
 
-      this.nodes.local_place.innerHTML = Store.users[name].datas.pseudo
+      this.nodes.local_place.innerHTML = name
       this.nodes.local_theme.innerHTML = 'user'
+      
+      gsap.to(this.nodes.canvas.children[0], 1.5, { scale: .65, xPercent: -15, yPercent: -5, ease: 'Power3.easeInOut' })
+   }
+
+   goToThemeInfo(theme) {
+      this.changeView('themeInfos')
+
+      gsap.fromTo(this.nodes.theme_info, 2, { opacity: 0, ease: 'Power3.easeInOut' }, { opacity: 1, ease: 'Power3.easeInOut' })
+      this.nodes.hub_left_bottom.children[0].classList.remove('hide')
+      this.nodes.theme_info.classList.remove('hide')
+      this.nodes.connections_count.innerHTML = Connections.getThemeConnections(theme).length
+      this.nodes.coordinate.innerHTML =  `[${Store.themes[theme].position.x.toFixed(2)}, ${Store.themes[theme].position.y.toFixed(2)}, ${Store.themes[theme].position.z.toFixed(2)}]`
+      this.nodes.hub_left_bottom.children[1].classList.add('hide')
+
+      this.nodes.canvas.children[0].classList.add('clickCanvas')
+      
+      this.nodes.theme_name.innerHTML = Store.list.themesName[theme]
+
+      /* Clean up rating display */
+      let tmpCount = this.nodes.theme_child_rating.children.length
+      for (let i = 0; i < tmpCount; i++) {
+         this.nodes.theme_child_rating.children[0].remove()
+      }
+
+      /* Theme childs rating */
+      const tmpRating = Store.themes[theme].childs
+      
+      const rating = []
+      for (const themeChild in tmpRating) {
+         rating.push([themeChild, tmpRating[themeChild]])
+      }
+      rating.sort( (a, b) => b[1] - a[1] )
+
+      const docFragment = document.createDocumentFragment()
+
+      rating.forEach(themeChild => {
+         const userContent = document.createElement('div')
+         userContent.classList.add('theme')
+         
+         const themeChildName = document.createElement('span')
+         themeChildName.innerHTML = themeChild[0]
+         
+         const themeChildRate = document.createElement('span')
+         themeChildRate.innerHTML = themeChild[1].toFixed(2) + " %"
+         
+         if (themeChild[0] == 'Nothing') {
+            themeChildName.classList.add('red')
+            themeChildRate.classList.add('red')
+         }
+         
+         userContent.append(themeChildName)
+         userContent.append(themeChildRate)
+         
+         docFragment.append(userContent)
+      })
+
+      this.nodes.theme_child_rating.append(docFragment)
+
+      this.nodes.local_place.innerHTML = Store.list.themesName[theme]
+      this.nodes.local_theme.innerHTML = 'theme'
       
       gsap.to(this.nodes.canvas.children[0], 1.5, { scale: .65, xPercent: -15, yPercent: -5, ease: 'Power3.easeInOut' })
    }
    
    backExp() {
-      gsap.to(this.nodes.user_info, 1, { opacity: 0, ease: 'Power3.easeInOut', onComplete: () => {
-         this.changeView('exp')
-         this.nodes.user_info.classList.add('hide')
-      }})
+      if (this.currentView == 'userInfos') {
+         gsap.to(this.nodes.user_info, 1, { opacity: 0, ease: 'Power3.easeInOut', onComplete: () => {
+            this.nodes.user_info.classList.add('hide')
+         }})
+      } else if (this.currentView == 'themeInfos') {
+         gsap.to(this.nodes.theme_info, 1, { opacity: 0, ease: 'Power3.easeInOut', onComplete: () => {
+            this.nodes.theme_info.classList.add('hide')
+         }})
+      }
+
+      this.changeView('exp')
       
       this.nodes.hub_left_bottom.children[0].classList.add('hide')
       this.nodes.hub_left_bottom.children[1].classList.remove('hide')
@@ -223,13 +291,13 @@ class Views {
       })
 
       this.nodes.back_home.addEventListener('click', () => {
-         if (this.currentView == 'userInfos') this.backExp()
+         if (this.currentView == 'userInfos' || this.currentView == 'themeInfos') this.backExp()
          
          this.backHome()
       })
 
       this.nodes.canvas.children[0].addEventListener('click', () => {
-         if (this.currentView == 'userInfos') this.backExp()
+         if (this.currentView == 'userInfos' || this.currentView == 'themeInfos') this.backExp()
       })
    }
 }

@@ -1,5 +1,6 @@
 import { Color, Mesh, MeshBasicMaterial, SphereBufferGeometry } from 'three'
 
+import Views from '@js/Views'
 import Scene from '@js/Scene'
 import Raycaster from '@js/Raycaster'
 import Mouse from '@js/Mouse'
@@ -22,8 +23,8 @@ class Themes {
    start() {
       this.setGeometry()
       this.setMaterial()
-     this.loadModel()
-     this.event()
+      this.loadModel()
+      this.event()
    }
 
    loadModel() {
@@ -87,6 +88,8 @@ class Themes {
       themeMesh.position.copy(theme.position)
       themeMesh.name = theme.name
 
+      Store.themes[themeMesh.name].position = theme.position
+
       this.add(themeMesh)
    }
 
@@ -117,7 +120,6 @@ class Themes {
       const promise = new Promise(resolve => {
          for (let i = 0; i < this.themesModel.children.length; i++) {
             this.themes[this.themesModel.children[i].name] = {}
-            // this.themesModel.children[i].name
             this.themes[this.themesModel.children[i].name].theme = {}
             this.themes[this.themesModel.children[i].name].theme.name = this.themesModel.children[i].name
             this.themes[this.themesModel.children[i].name].theme.mesh = this.themesModel.children[i]
@@ -168,7 +170,7 @@ class Themes {
    event() {
       window.addEventListener('click', () => {
          if (this.intersects.length) {
-            console.log(this.intersects[0].object.name);
+            Views.goToThemeInfo(this.intersects[0].object.name)
          }
       })
    }
@@ -184,10 +186,10 @@ class Themes {
 
       this.intersects = Raycaster.raycaster.intersectObjects(this.themesModel.children)
 
-      // document.body.style.cursor = 'default'
       for (let i = 0; i < this.intersects.length; i ++) {
          document.body.style.cursor = 'pointer'
-         // console.log('hover ' + this.intersects[ i ].object.id)
+         if (Views.currentView == 'exp') Views.nodes.hover_item_info.classList.add('fadeIn')
+         Views.nodes.hover_item_info.children[0].innerHTML = Store.list.themesName[this.intersects[0].object.name]
       }
    }
 }

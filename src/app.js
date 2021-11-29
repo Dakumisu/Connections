@@ -1,8 +1,6 @@
 import './main.scss'
 
-import { TweenLite, TweenMax, gsap } from 'gsap' // https://greensock.com/docs/
 import Splitting from "splitting";
-Splitting();
 
 import Scene from '@js/Scene'
 import PostProcessing from '@js/PostProcessing' // Création de la scène + renderer + camera
@@ -19,7 +17,7 @@ import Views from '@js/Views'
 import Preloader from '@js/Preloader'
 import SoundController from '@js/SoundController'
 
-import DarkHole from '@js/DarkHole'
+import { Store } from '@js/Store'
 import Themes from '@js/Themes'
 import ParticlesTrails from '@js/ParticlesTrails'
 import SphereParticles from '@js/SphereParticles'
@@ -27,21 +25,30 @@ import Univers from '@js/Univers'
 import Users from '@js/Users'
 import Connections from '@js/Connections'
 
-// DarkHole.start()
+Splitting();
 
-Users.start()
-Connections.start()
-Themes.start()
-Score.start()
+if (!Store.mobile) {
+    Users.start()
+    Connections.start()
+    Themes.start()
+    Score.start()
+    
+    document.addEventListener('keydown', e => {
+        console.log(`${e.key} touch pressed`)
+    })
+    
+    Raf.suscribe('update', () => { update() })
+}
 
-document.addEventListener('keydown', e => {
-    console.log(`${e.key} touch pressed`)
-})
-
-Raf.suscribe('update', () => { update() })
 
 function update() {
-    document.body.style.cursor = 'default'
+    if (document.body.style.cursor != 'default') {
+        document.body.style.cursor = 'default'
+        Views.nodes.hover_item_info.classList.remove('fadeIn')
+    }
+
+    Views.nodes.hover_item_info.style.top = Mouse.mouseDom.y + "px"
+    Views.nodes.hover_item_info.style.left = Mouse.mouseDom.x + "px"
 
     updateExp()
 }
