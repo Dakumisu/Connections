@@ -31,6 +31,8 @@ class Preloader {
       gsap.to(Store.nodes.preload_value, 5,{ scaleX: 1, ease: "Power0.easeNone", onComplete: () => {
          gsap.to(Store.nodes.preloader, 1, { opacity: 0, ease: "Power0.easeNone", onComplete: () => {
             gsap.fromTo(Store.nodes.hud_button, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: .75, ease: "Power3.easeInOut" })
+            gsap.fromTo(Store.nodes.home_title.children[0], 2, { opacity: 0, yPercent: -20 }, { yPercent: 0, opacity: 1 })
+            gsap.fromTo(Store.nodes.about_title.children[0], 2, { opacity: 0, yPercent: -20 }, { yPercent: 0, opacity: 1 })
             gsap.fromTo(Store.nodes.home_title.children[0].children[0].children, 2, { opacity: 0, yPercent: -20, stagger: { each: .04, from: 'start'} }, { yPercent: 0, opacity: .75, stagger: { each: .04, from: 'start'}, ease: "Power3.easeInOut", delay: .25 })
             gsap.fromTo(Store.nodes.logo, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: 1, ease: "Power3.easeInOut", delay: .5 })
             gsap.fromTo(Store.nodes.caption, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: .75, ease: "Power3.easeInOut", delay: .75 })
