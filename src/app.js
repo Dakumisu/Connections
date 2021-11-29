@@ -1,3 +1,5 @@
+console.log(`%c   Gobelins' Workshop - Dataviz 👀   `, `background: #000; padding: 5px; font-size: 12px; color: #fff`)
+
 import './main.scss'
 
 import Splitting from "splitting";
