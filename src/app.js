@@ -38,11 +38,6 @@ document.addEventListener('keydown', e => {
     console.log(`${e.key} touch pressed`)
 })
 
-Views.startExp()
-// setTimeout(() => {
-//     Views.goToUserInfo('xX_PRO_GAMER_35310_Xx')
-// }, 2000);
-
 Raf.suscribe('update', () => { update() })
 
 function update() {

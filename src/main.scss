@@ -149,6 +149,8 @@ p {
 	z-index: 2;
 
 	button {
+		opacity: 0;
+
 		padding: 5px 10px;
 		background-color: #00000000;
 
@@ -162,6 +164,11 @@ p {
 .main-container {
 	position: absolute;
 	z-index: 3;
+}
+
+
+.about .content .title h1 span span.char {
+	opacity: .75;
 }
 
 .home, .about {
@@ -209,14 +216,18 @@ p {
 				font-weight: normal;
 				letter-spacing: -5px;
 				top: -1.5rem;
-				// margin-top: 5%;
 				mix-blend-mode: color-burn;
-				opacity: .75;
+			}
+
+			span.char {
+				opacity: 0;
 			}
 		}
 		
 		&--home {
 			.logo {
+				opacity: 0;
+
 				height: 50%;
 
 				display: flex;
@@ -252,6 +263,8 @@ p {
 			}
 
 			.caption {
+				opacity: 0;
+
 				height: 10%;
 
 				width: 70vw;
@@ -259,7 +272,6 @@ p {
 				flex-direction: column;
 				justify-content: center;
 				align-items: center;
-				opacity: .75;
 				letter-spacing: -1px;
 
 				p {
@@ -347,6 +359,8 @@ p {
 }
 
 .start {
+	opacity: 0;
+
 	position: relative;
 	height: 10%;
 
@@ -416,6 +430,8 @@ p {
 	z-index: 3;
 
 	.localisation {
+		opacity: 0;
+
 		width: 100%;
 		height: 100%;
 

@@ -42,8 +42,8 @@ class Views {
 
       gsap.to(this.nodes.home, 1, { opacity: 0, ease: 'Power3.easeInOut', onComplete: () => {
          this.nodes.home.classList.add('hide')
-
          this.nodes.about.classList.remove('hide')
+         
          gsap.to(this.nodes.about, 1, { opacity: 1, ease: 'Power3.easeInOut' })
          this.nodes.hud_button.children[0].innerHTML = 'connections'
       } })
@@ -57,7 +57,6 @@ class Views {
          this.nodes.home.classList.remove('hide')
 
          gsap.to(this.nodes.home, 2, { opacity: 1, ease: 'Power3.easeInOut' })
-         // gsap.to(this.nodes.canvas, 1, { opacity: 1, ease: 'Power3.easeInOut', delay: 1 })
          this.nodes.hud_button.children[0].innerHTML = 'about'
       } })
 
@@ -110,19 +109,19 @@ class Views {
       Store.nodes.about_credit.style.opacity = 0
       Store.nodes.about_end.style.opacity = 0
       
-      gsap.fromTo(Store.nodes.hud_button, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: 1, ease: "Power3.easeInOut" })
+      gsap.fromTo(Store.nodes.hud_button, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: .75, ease: "Power3.easeInOut" })
 
-      gsap.fromTo(Store.nodes.home_title.children[0].children[0].children, 2, { opacity: 0, yPercent: -20, stagger: { each: .04, from: 'start'} }, { yPercent: 0, opacity: 1, stagger: { each: .04, from: 'start'}, ease: "Power3.easeInOut", delay: .25 })
+      gsap.fromTo(Store.nodes.home_title.children[0].children[0].children, 2, { opacity: 0, yPercent: -20, stagger: { each: .04, from: 'start'} }, { yPercent: 0, opacity: .75, stagger: { each: .04, from: 'start'}, ease: "Power3.easeInOut", delay: .25 })
       gsap.fromTo(Store.nodes.logo, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: 1, ease: "Power3.easeInOut", delay: .5 })
-      gsap.fromTo(Store.nodes.caption, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: 1, ease: "Power3.easeInOut", delay: .75 })
+      gsap.fromTo(Store.nodes.caption, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: .75, ease: "Power3.easeInOut", delay: .75 })
 
-      gsap.fromTo(Store.nodes.about_title.children[0].children[0].children, 2, { opacity: 0, yPercent: -20, stagger: { each: .04, from: 'start'} }, { yPercent: 0, opacity: 1, stagger: { each: .04, from: 'start'}, ease: "Power3.easeInOut", delay: .25 })
-      gsap.fromTo(Store.nodes.about_text, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: 1, ease: "Power3.easeInOut", delay: .5 })
-      gsap.fromTo(Store.nodes.about_credit, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: 1, ease: "Power3.easeInOut", delay: .75 })
-      gsap.fromTo(Store.nodes.about_end, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: 1, ease: "Power3.easeInOut", delay: .75 })
+      gsap.fromTo(Store.nodes.about_title.children[0].children[0].children, 2, { opacity: 0, yPercent: -20, stagger: { each: .04, from: 'start'} }, { yPercent: 0, opacity: .75, stagger: { each: .04, from: 'start'}, ease: "Power3.easeInOut", delay: .25 })
+      gsap.fromTo(Store.nodes.about_text, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: .75, ease: "Power3.easeInOut", delay: .5 })
+      gsap.fromTo(Store.nodes.about_credit, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: .75, ease: "Power3.easeInOut", delay: .75 })
+      gsap.fromTo(Store.nodes.about_end, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: .75, ease: "Power3.easeInOut", delay: .75 })
 
-      gsap.fromTo(Store.nodes.start, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: 1, ease: "Power3.easeInOut", delay: 1 })
-      gsap.fromTo(Store.nodes.localisation, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: 1, ease: "Power3.easeInOut", delay: 1.25 })
+      gsap.fromTo(Store.nodes.start, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: .75, ease: "Power3.easeInOut", delay: 1 })
+      gsap.fromTo(Store.nodes.localisation, 2, { opacity: 0, yPercent: -20 }, {yPercent: 0, opacity: .75, ease: "Power3.easeInOut", delay: 1.25 })
    }
 
    goToUserInfo(name) {
