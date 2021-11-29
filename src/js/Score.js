@@ -7,10 +7,6 @@ class Score {
       this.score = {}
 
       this.initialized = false
-      
-      // setTimeout(() => {
-      //    this.setScore()
-      // }, 1);
    }
 
    start() {
@@ -47,6 +43,8 @@ class Score {
       
                         const labelChildCheck = labelChild.find(e => e === element2)
 
+                        let tmpUsersScore = usersScore
+
                         if (element1 == element2) {
                            usersScore ++
                            score[pseudo1][pseudo2].commonalities[label].push(element2)
@@ -61,21 +59,13 @@ class Score {
       }
       
       this.score = score
-
-      // console.log(this.score);
       
       for (const user in this.score) {
-         // console.log(user);
          Store.users[user].highScore = this.getHighScore(user).pourcent
+         Store.users[user].highScores = this.getHighScore(user).scores
          Store.users[user].worstScore = this.getWorstScore(user).pourcent
-         // console.log(Store.users[user]);
+         Store.users[user].worstScores = this.getWorstScore(user).scores
       }
-
-
-      console.log(this.score);
-      // this.getScore('Daku', 'Arles')
-      // console.log(this.getHighScore('Amb').scores);
-      // this.getWorstScore('Daku')
 
       this.initialized = true
    }
@@ -101,22 +91,19 @@ class Score {
 
       for (const user in this.score[name1]) {
          let testDiff = this.getDiff(name1, this.score[name1][user].name)
-// console.log(name1, this.score[name1][user].name, this.score[name1][user].score + this.score[name1][user].score, testDiff, this.score[name1][user].score + this.score[name1][user].score - testDiff);
-         if ( highScore.score < this.score[name1][user].score - testDiff ) {
-            highScore.score = this.score[name1][user].score - testDiff
+         if ( highScore.score < this.score[name1][user].score ) {
+            highScore.score = this.score[name1][user].score
             highScore.name = this.score[name1][user].name
          }
       }
 
       for (const user in this.score[name1]) {
-         if ( highScore.score == this.score[name1][user].score ) highScore.scores[this.score[name1][user].name] = this.score[name1][user].score
+         if ( highScore.score == this.score[name1][user].score )
+            highScore.scores[this.score[name1][user].name] = this.getPourcent(this.score[name1][user].score, this.getMaxScore(name1))
       }
 
       highScore.pourcent = this.getPourcent(highScore.score, this.getMaxScore(name1))
-      // console.log(name1, highScore.pourcent, highScore.name)
       highScore.norm = this.getNorm(highScore.pourcent)
-
-      // Store.users[name1].highScore = highScore.pourcent
 
       return highScore;
    }
@@ -124,25 +111,27 @@ class Score {
    getWorstScore(name1) {
       const worstScore = {}
       worstScore.score = Infinity
+      worstScore.scores = []
       let diff = 0
 
       for (const user in this.score[name1]) {
          let testDiff = this.getDiff(name1, this.score[name1][user].name)
 
-         if (worstScore.score > this.score[name1][user].score - testDiff) {
-            worstScore.score = this.score[name1][user].score - testDiff
+         if (worstScore.score > this.score[name1][user].score) {
+            worstScore.score = this.score[name1][user].score
             worstScore.name = this.score[name1][user].name
 
-            // console.log(name1, worstScore.score, this.score[name1][user].name)
             diff = this.getDiff(name1, this.score[name1][user].name)
          }
       }
 
-      worstScore.pourcent = this.getPourcent(worstScore.score, this.getMaxScore(name1))
-      // console.log(name1, worstScore.pourcent, worstScore.name)
-      worstScore.norm = this.getNorm(worstScore.pourcent)
+      for (const user in this.score[name1]) {
+         if ( worstScore.score == this.score[name1][user].score )
+            worstScore.scores[this.score[name1][user].name] = this.getPourcent(this.score[name1][user].score, this.getMaxScore(name1))
+      }
 
-      // Store.users[name1].worstScore = worstScore.pourcent
+      worstScore.pourcent = this.getPourcent(worstScore.score, this.getMaxScore(name1))
+      worstScore.norm = this.getNorm(worstScore.pourcent)
 
       return worstScore
    }
@@ -150,7 +139,7 @@ class Score {
    getScore(name1, name2) {
       let testDiff = this.getDiff(name1, name2)
 
-      const tmpScore = this.score[name1][name2].score - testDiff
+      const tmpScore = this.score[name1][name2].score
       const maxScore = this.getMaxScore(name1)
 
       const userScore = {}
@@ -190,6 +179,37 @@ class Score {
       return tmpData
    }
 }
+
+  // {
+  //   "pseudo": "GROS TEST",
+  //   "profile": "Dev",
+  //   "music": "Classical, Rap, Rock, Electro, Jazz, Pop",
+  //   "art": "Abstract, Pop Art, Romanticism, Surrealism, Impressionism",
+  //   "game": "RPG, MMO, FPS, MOBA, Strategy, Fighting game, Simulation",
+  //   "movieType": "Action, Thriller, SF, Fantastique, Animation, Comedy, Horror",
+  //   "bookType": "Poetry, Novel, Essay, Comics, Manga, Biography, Documentary",
+  //   "sport": "Foot, Basket, Rugby, Swimming, Tennis",
+  //   "socialNetwork": "Twitter, Facebook, Instagram, Snapchat, Tiktok",
+  //   "animal": "Cat",
+  //   "food": "Asian, Italian, French, Indian, Fast-Food",
+  //   "event": "Concert, Cinema, Art exhibition, Theater",
+  //   "design": "2D, 3D"
+  // },
+  // {
+  //   "pseudo": "GROS TEST 2",
+  //   "profile": "Designer",
+  //   "music": "NOTHING",
+  //   "art": "NOTHING",
+  //   "game": "NOTHING",
+  //   "movieType": "NOTHING",
+  //   "bookType": "NOTHING",
+  //   "sport": "NOTHING",
+  //   "socialNetwork": "NOTHING",
+  //   "animal": "NOTHING",
+  //   "food": "NOTHING",
+  //   "event": "NOTHING",
+  //   "design": "NOTHING"
+  // }
 
 const out = new Score()
 export default out

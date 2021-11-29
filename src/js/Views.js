@@ -71,9 +71,9 @@ class Views {
          Scene.startExp()
          this.changeView('exp')
          gsap.to(this.nodes.canvas, 1, {opacity: 1, ease: 'Power3.easeOut', delay: 1})
+         this.nodes.local_theme.innerHTML = "overall"
          gsap.to(this.nodes.exp_container, 1, {opacity: 1, ease: 'Power3.easeOut', delay: 1, onComplete: () => {
             this.nodes.hub_right_bottom.style.pointerEvents = 'all'
-            this.nodes.local_theme.innerHTML = "overall"
          }})
       }})
    }
@@ -138,14 +138,58 @@ class Views {
       
       this.nodes.user_pseudo.innerHTML = Store.users[name].datas.pseudo
 
-      this.nodes.user_good_matching_score1.children[0].innerHTML = Score.getHighScore(Store.users[name].datas.pseudo).name
-      this.nodes.user_good_matching_score1.children[1].innerHTML = Score.getHighScore(Store.users[name].datas.pseudo).pourcent.toFixed(2) + " %"
-      // this.nodes.user_good_matching_score2.children[0].innerHTML = Score.getHighScore(Store.users[name].datas.pseudo).name
-      // this.nodes.user_good_matching_score2.children[1].innerHTML = Score.getHighScore(Store.users[name].datas.pseudo).pourcent.toFixed(2) + " %"
-      // this.nodes.user_good_matching_score3.children[0].innerHTML = Score.getHighScore(Store.users[name].datas.pseudo).name
-      // this.nodes.user_good_matching_score3.children[1].innerHTML = Score.getHighScore(Store.users[name].datas.pseudo).pourcent.toFixed(2) + " %"
-      this.nodes.user_worst_matching_score.children[0].innerHTML = Score.getWorstScore(Store.users[name].datas.pseudo).name
-      this.nodes.user_worst_matching_score.children[1].innerHTML = Score.getWorstScore(Store.users[name].datas.pseudo).pourcent.toFixed(2) + " %"
+      /* Clean up match.es' display */
+      let tmpCount = this.nodes.user_good_matching_score.children.length
+      for (let i = 0; i < tmpCount; i++) {
+         this.nodes.user_good_matching_score.children[0].remove()
+      }
+      tmpCount = this.nodes.user_worst_matching_score.children.length
+      for (let i = 0; i < tmpCount; i++) {
+         this.nodes.user_worst_matching_score.children[0].remove()
+      }
+
+      /* Best match.es */
+      const highScores = Store.users[name].highScores
+      
+      const highScoreDocFragment = document.createDocumentFragment()
+
+      for (const name in highScores) {
+         const userContent = document.createElement('div')
+         userContent.classList.add('user')
+
+         const userName = document.createElement('span')
+         userName.innerHTML = name
+         const userScore = document.createElement('span')
+         userScore.innerHTML = highScores[name].toFixed(2) + " %"
+
+         userContent.append(userName)
+         userContent.append(userScore)
+
+         highScoreDocFragment.append(userContent)
+      }
+
+      this.nodes.user_good_matching_score.append(highScoreDocFragment)
+
+      /* Worst match.es */
+      const worstScores = Store.users[name].worstScores
+      const worstScoreDocFragment = document.createDocumentFragment()
+
+      for (const name in worstScores) {
+         const userContent = document.createElement('div')
+         userContent.classList.add('user')
+
+         const userName = document.createElement('span')
+         userName.innerHTML = name
+         const userScore = document.createElement('span')
+         userScore.innerHTML = worstScores[name].toFixed(2) + " %"
+
+         userContent.append(userName)
+         userContent.append(userScore)
+
+         worstScoreDocFragment.append(userContent)
+      }
+
+      this.nodes.user_worst_matching_score.append(worstScoreDocFragment)
 
       this.nodes.local_place.innerHTML = Store.users[name].datas.pseudo
       this.nodes.local_theme.innerHTML = 'user'
@@ -156,10 +200,10 @@ class Views {
    backExp() {
       gsap.to(this.nodes.user_info, 1, { opacity: 0, ease: 'Power3.easeInOut', onComplete: () => {
          this.changeView('exp')
+         this.nodes.user_info.classList.add('hide')
       }})
       
       this.nodes.hub_left_bottom.children[0].classList.add('hide')
-      this.nodes.user_info.classList.add('hide')
       this.nodes.hub_left_bottom.children[1].classList.remove('hide')
       this.nodes.local_place.innerHTML = 'plateau'
       this.nodes.local_theme.innerHTML = 'overall'
