@@ -51,15 +51,11 @@ class Scene {
 
    startExp() {
       gsap.to(this.camera.position, 3, { z: 15, ease: 'Power3.easeInOut' })
+      gsap.from(this.camera.rotation, 3, { z: Math.PI * .5, ease: 'Power3.easeInOut' })
    }
 
    backHome() {
       gsap.to(this.camera.position, 3, { x: 0, y: 0, z: 90, ease: 'Power3.easeInOut' })
-   }
-
-   update() {
-      // this.camera.position.x = Math.cos(Raf.timeElapsed *.005) * twoPi
-      // this.camera.position.y = Math.sin(Raf.timeElapsed *.005) * twoPi
    }
    
    render () {

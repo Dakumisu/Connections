@@ -178,8 +178,10 @@ class Themes {
 
    event() {
       window.addEventListener('click', () => {
-         if (this.intersects.length) {
-            Views.goToThemeInfo(this.intersects[0].object.name)
+         if (Views.currentView != 'themeInfos') {
+            if (this.intersects.length) {
+               Views.goToThemeInfo(this.intersects[0].object.name)
+            }
          }
       })
    }

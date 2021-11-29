@@ -654,14 +654,15 @@ p {
 		width: auto;
 		margin: auto;
 		height: auto;
-		// margin-top: 3.5%;
-		bottom: 3.5%;
+		bottom: 5%;
 		left: 3.5%;
 
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: flex-start;
+
+		opacity: .85;
 
 		p {
 			margin: 0;
@@ -681,7 +682,7 @@ p {
 		margin: auto;
 		height: auto;
 		// margin-top: 3.5%;
-		bottom: 3.5%;
+		bottom: 5%;
 		right: 3.5%;
 
 		display: flex;

@@ -65,8 +65,8 @@ class Views {
    startExp() {
       this.nodes.localisation.classList.add('toWhite')
 
-      gsap.to(this.nodes.main_container, 2, {yPercent: 100, ease: 'Power3.easeInOut', delay: 1})
-      gsap.to(this.nodes.canvas, 2, {opacity: 0, ease: 'Power3.easeOut',  onComplete: () => {
+      gsap.to(this.nodes.main_container, 2, {yPercent: 100, ease: 'Power3.easeInOut'})
+      gsap.to(this.nodes.canvas, 1, {opacity: 0, ease: 'Power3.easeOut',  onComplete: () => {
          Scene.startExp()
          this.changeView('exp')
          gsap.to(this.nodes.canvas, 1, {opacity: 1, ease: 'Power3.easeOut', delay: 1})
@@ -268,7 +268,9 @@ class Views {
          }})
       }
 
-      this.changeView('exp')
+      setTimeout(() => {
+         this.changeView('exp')
+      }, 100);
       
       this.nodes.hub_left_bottom.children[0].classList.add('hide')
       this.nodes.hub_left_bottom.children[1].classList.remove('hide')
