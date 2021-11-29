@@ -59,7 +59,7 @@ p {
 	left: 0;
 	z-index: -1;
 
-	background-image: url('../static/img/bg.jpeg');
+	background-image: url('../public/img/bg.jpeg');
 	background-repeat: no-repeat;
 	background-size: cover;
 }
@@ -313,7 +313,7 @@ p {
 					height: 35vh;
 					background-color: #000;
 					border-radius: 500px;
-					background-image: url('../static/img/laboulenoir.png');
+					background-image: url('../public/img/laboulenoir.png');
 					// background-repeat: no-repeat;
 					background-size: cover;
 				}

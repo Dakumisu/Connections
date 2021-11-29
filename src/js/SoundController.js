@@ -2,8 +2,8 @@ import { gsap } from 'gsap'
 import { Store } from '@js/Store'
 import howlerjs from 'howler' // https://github.com/goldfire/howler.js#documentation
 
-import btnSoundClick from '@static/sound/button.mp3'
-import atmosSound from '@static/sound/atmosphericsound.mp3'
+import btnSoundClick from '@public/sound/button.mp3'
+import atmosSound from '@public/sound/atmosphericsound.mp3'
 
 class SoundController {
    constructor() {

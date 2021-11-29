@@ -23,7 +23,6 @@ import { Store } from '@js/Store'
 import Themes from '@js/Themes'
 import ParticlesTrails from '@js/ParticlesTrails'
 import SphereParticles from '@js/SphereParticles'
-import Univers from '@js/Univers'
 import Users from '@js/Users'
 import Connections from '@js/Connections'
 

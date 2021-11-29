@@ -16,6 +16,8 @@ class Themes {
       this.themes = {}
       this.sphereParticles = []
 
+      this.intersects = []
+
       this.initialized = false
       this.parseInitialized = false
    }

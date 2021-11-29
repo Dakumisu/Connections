@@ -17,6 +17,8 @@ class Users {
       this.groups.designer = new Group()
       this.groups.global = new Group()
 
+      this.intersects = []
+
       this.raycastedMeshes = []
 
       this.initialized = false

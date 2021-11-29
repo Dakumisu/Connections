@@ -18,9 +18,11 @@ module.exports = {
             '@glsl': path.resolve(__dirname, '../src/glsl/'),
             '@utils': path.resolve(__dirname, '../src/utils/'),
 
+            '@public': path.resolve(__dirname, '../public/'),
+            '@img': path.resolve(__dirname, '../public/img/'),
+            '@model': path.resolve(__dirname, '../public/models/'),
+
             '@static': path.resolve(__dirname, '../static/'),
-            '@img': path.resolve(__dirname, '../static/img/'),
-            '@model': path.resolve(__dirname, '../static/models/'),
         }
     },
     devtool: 'source-map',
@@ -33,7 +35,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             title: 'WebGL Starter',
-            favicon: path.resolve(__dirname, '../static/img/icon/favicon.jpg'),
+            favicon: path.resolve(__dirname, '../static/icon/favicon.jpg'),
             template: path.resolve(__dirname, '../src/index.html'),
             chunks: ['app'],
             minify: true
