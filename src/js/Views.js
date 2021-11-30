@@ -270,7 +270,7 @@ class Views {
 
       setTimeout(() => {
          this.changeView('exp')
-      }, 100);
+      }, 500);
       
       this.nodes.hub_left_bottom.children[0].classList.add('hide')
       this.nodes.hub_left_bottom.children[1].classList.remove('hide')

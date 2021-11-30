@@ -98,7 +98,7 @@ class Users {
 
    event() {
       window.addEventListener('click', () => {
-         if (Views.currentView != 'userInfos' || Views.currentView != 'themeInfos') {
+         if (Views.currentView != 'userInfos' && Views.currentView != 'themeInfos') {
             if (this.intersects.length) {
                Views.goToUserInfo(this.intersects[0].object.name)
             }
@@ -109,14 +109,16 @@ class Users {
    update() {
       if (!this.initialized) return
 
-      Raycaster.raycaster.setFromCamera(Mouse.mouseScene, Scene.camera)
-
-      this.intersects = Raycaster.raycaster.intersectObjects(this.raycastedMeshes)
-
-      for (let i = 0; i < this.intersects.length; i ++) {
-         document.body.style.cursor = 'pointer'
-         if (Views.currentView == 'exp') Views.nodes.hover_item_info.classList.add('fadeIn')
-         Views.nodes.hover_item_info.children[0].innerHTML = this.intersects[0].object.name
+      if (Views.currentView != 'userInfos' && Views.currentView != 'themeInfos') {
+         Raycaster.raycaster.setFromCamera(Mouse.mouseScene, Scene.camera)
+   
+         this.intersects = Raycaster.raycaster.intersectObjects(this.raycastedMeshes)
+   
+         for (let i = 0; i < this.intersects.length; i ++) {
+            document.body.style.cursor = 'pointer'
+            if (Views.currentView == 'exp') Views.nodes.hover_item_info.classList.add('fadeIn')
+            Views.nodes.hover_item_info.children[0].innerHTML = this.intersects[0].object.name
+         }
       }
    }
 }
