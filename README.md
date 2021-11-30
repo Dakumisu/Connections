@@ -1,4 +1,4 @@
-# Connections. A Gobelins' Workshop on Dataviz
+# Gobelins' Workshop - Dataviz - Connections. 🔬
 
 Hi :)
 
