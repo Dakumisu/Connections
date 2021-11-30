@@ -22,8 +22,6 @@ class Users {
       this.raycastedMeshes = []
 
       this.initialized = false
-
-      // this.init()
    }
    
    async start() {
@@ -100,7 +98,7 @@ class Users {
 
    event() {
       window.addEventListener('click', () => {
-         if (Views.currentView != 'userInfos') {
+         if (Views.currentView != 'userInfos' || Views.currentView != 'themeInfos') {
             if (this.intersects.length) {
                Views.goToUserInfo(this.intersects[0].object.name)
             }

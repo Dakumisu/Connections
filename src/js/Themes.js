@@ -180,7 +180,7 @@ class Themes {
 
    event() {
       window.addEventListener('click', () => {
-         if (Views.currentView != 'themeInfos') {
+         if (Views.currentView != 'themeInfos' ||Views.currentView != 'userInfos') {
             if (this.intersects.length) {
                Views.goToThemeInfo(this.intersects[0].object.name)
             }
